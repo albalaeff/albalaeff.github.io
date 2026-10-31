@@ -46,16 +46,72 @@
   </nav>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- Hero: live product -->
     <header class="section--stage cs-hero">
       <div class="wrap">
         <a class="back" href="../index.html#project">All work</a>
-        <h1 class="display">Personal Exchange Bot</h1>
-        <p class="lead">Peer-to-peer currency exchange inside Telegram. Built by a team of two people and a crew of Claude Code agents, in production since October 2026.</p>
-        <div class="actions">
-          <a class="btn" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
-          <a class="more" href="#contact">Ask for a walkthrough</a>
+        <div class="cs-hero__grid">
+          <div>
+            <h1 class="display">Personal Exchange Bot</h1>
+            <p class="lead">Peer-to-peer currency exchange inside Telegram. Built by a team of two people and a crew of Claude Code agents, in production since October 2026.</p>
+            <div class="actions">
+              <a class="btn" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
+              <a class="more" href="#contact">Ask for a walkthrough</a>
+            </div>
+          </div>
+
+          <div class="demo cs-hero__demo">
+            <div class="phone" role="img" aria-label="Demo of a deal in Personal Exchange Bot: an offer goes live, two people respond, the author picks one, they choose a meeting point, exchange cash and rate each other.">
+              <div class="phone__screen" aria-hidden="true">
+                <div class="phone__status"></div>
+                <div class="chat-head">
+                  <div class="chat-head__avatar">PX</div>
+                  <div>
+                    <p class="chat-head__name">Personal Exchange Bot</p>
+                    <p class="chat-head__sub">bot</p>
+                  </div>
+                </div>
+                <div class="chat" data-demo>
+                  <div class="msg msg--wide" data-step="bot">
+                    <p class="msg__title">Your offer is live in Nitra</p>
+                    <dl class="offer">
+                      <div><dt>You give</dt><dd>1,000 EUR</dd></div>
+                      <div><dt>You get</dt><dd>24,500 CZK</dd></div>
+                      <div><dt>Your rate</dt><dd>24.50</dd></div>
+                      <div><dt>Market rate</dt><dd>24.31</dd></div>
+                    </dl>
+                  </div>
+                  <div class="msg msg--wide" data-step="bot">
+                    <p class="msg__title">2 responses</p>
+                    <ul class="replies">
+                      <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
+                      <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                    </ul>
+                    <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+                  </div>
+                  <div class="msg msg--me" data-step="me">Jana, 24.70</div>
+                  <div class="msg msg--wide" data-step="bot">
+                    <p class="msg__title">Deal started with Jana</p>
+                    <p>Pick a place to meet.</p>
+                    <div class="map"><span class="map__pin"></span></div>
+                    <p class="msg__note">Main square, today at 17:30</p>
+                  </div>
+                  <div class="msg msg--me" data-step="me">Got 24,700 CZK. Done!</div>
+                  <div class="msg msg--wide" data-step="bot">
+                    <p class="msg__title">Both sides confirmed</p>
+                    <p>How was the exchange with Jana?</p>
+                    <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="demo__caption">
+              <p class="small">A simplified deal, from offer to rating.</p>
+              <button class="demo__replay" type="button" hidden>Replay</button>
+            </div>
+          </div>
         </div>
+
         <dl class="facts">
           <div><dt>Role</dt><dd>Co-developer, team of two</dd></div>
           <div><dt>First version</dt><dd>1 October 2026</dd></div>
@@ -65,42 +121,133 @@
       </div>
     </header>
 
-    <!-- The idea -->
-    <section class="section" aria-labelledby="idea-title">
+    <!-- Why it exists, with photos -->
+    <section class="section section--mist" aria-labelledby="idea-title">
       <div class="wrap">
-        <div class="prose">
-          <h2 class="h2 h2--sm" id="idea-title">Cash exchange between people, without the guesswork.</h2>
-          <p>Swapping cash with another person can beat a bank or an exchange office. The hard parts are finding someone nearby, agreeing on a fair rate and trusting a stranger. Personal Exchange Bot handles all three inside Telegram.</p>
-          <p>It works with 156 currencies in 10 countries, from Czechia to Thailand, and speaks English, Ukrainian and Russian.</p>
+        <div class="section-head">
+          <h2 class="h2 h2--sm" id="idea-title">Many borders.<br>Many currencies.</h2>
+          <p class="lead">Central Europe is small, but a few hours on the road take you from the euro to the koruna or the forint. Swapping cash with another person can beat a bank or an exchange office. The hard parts are finding someone nearby, agreeing on a fair rate and trusting a stranger. Personal Exchange Bot handles all three inside Telegram.</p>
+        </div>
+
+        <div class="gallery">
+          <figure>
+            <picture>
+              <source type="image/avif" srcset="../assets/img/vienna-480.avif 480w, ../assets/img/vienna.avif 719w" sizes="(min-width: 760px) 330px, 78vw">
+              <source type="image/webp" srcset="../assets/img/vienna-480.webp 480w, ../assets/img/vienna.webp 719w" sizes="(min-width: 760px) 330px, 78vw">
+              <img src="../assets/img/vienna.jpg" width="719" height="913" alt="Aleksandr in a grey coat on a Vienna street, St. Stephen’s Cathedral behind him" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Vienna.</strong> Euro, like at home in Slovakia.</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source type="image/avif" srcset="../assets/img/budapest-480.avif 480w, ../assets/img/budapest.avif 685w" sizes="(min-width: 760px) 330px, 78vw">
+              <source type="image/webp" srcset="../assets/img/budapest-480.webp 480w, ../assets/img/budapest.webp 685w" sizes="(min-width: 760px) 330px, 78vw">
+              <img src="../assets/img/budapest.jpg" width="685" height="913" alt="Aleksandr in a black hood in front of St. Stephen’s Basilica in Budapest" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>Budapest.</strong> Forint, the moment you cross the border.</figcaption>
+          </figure>
+          <figure>
+            <picture>
+              <source type="image/avif" srcset="../assets/img/onroad-480.avif 480w, ../assets/img/onroad.avif 514w" sizes="(min-width: 760px) 330px, 78vw">
+              <source type="image/webp" srcset="../assets/img/onroad-480.webp 480w, ../assets/img/onroad.webp 514w" sizes="(min-width: 760px) 330px, 78vw">
+              <img class="gallery__img--top" src="../assets/img/onroad.jpg" width="514" height="913" alt="Aleksandr on a bus, sunlight across his face" loading="lazy" decoding="async">
+            </picture>
+            <figcaption><strong>On the road.</strong> Somewhere in between.</figcaption>
+          </figure>
+        </div>
+
+        <div class="figures">
+          <div class="figure">
+            <p class="figure__num">156</p>
+            <p class="figure__label">currencies you can trade</p>
+          </div>
+          <div class="figure">
+            <p class="figure__num">10</p>
+            <p class="figure__label">countries, from Czechia to Thailand</p>
+          </div>
+          <div class="figure">
+            <p class="figure__num">3</p>
+            <p class="figure__label">languages: English, Ukrainian, Russian</p>
+          </div>
+          <div class="figure">
+            <p class="figure__num">173</p>
+            <p class="figure__label">screens in the bot</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- How a deal works -->
-    <section class="section section--mist" id="how" aria-labelledby="how-title">
+    <!-- How a deal works: storyboard -->
+    <section class="section" id="how" aria-labelledby="how-title">
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2 h2--sm" id="how-title">How a deal works</h2>
+          <p class="lead">Four steps, all inside one Telegram chat.</p>
         </div>
-        <ol class="steps">
-          <li class="step">
-            <h3 class="h3">Post an offer</h3>
+
+        <ol class="story">
+          <li class="story__item">
+            <div class="story__screen" aria-hidden="true">
+              <div class="msg msg--wide">
+                <p class="msg__title">Your offer is live</p>
+                <dl class="offer">
+                  <div><dt>You give</dt><dd>1,000 EUR</dd></div>
+                  <div><dt>You get</dt><dd>24,500 CZK</dd></div>
+                  <div><dt>Your rate</dt><dd>24.50</dd></div>
+                  <div><dt>Market rate</dt><dd>24.31</dd></div>
+                </dl>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Post an offer</h3>
             <p>“I give 1,000 EUR, I want 24,500 CZK.” Market and exchange-office rates help you set a fair price.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Get responses</h3>
-            <p>Other people accept your rate or suggest their own.</p>
+          <li class="story__item">
+            <div class="story__screen" aria-hidden="true">
+              <div class="msg msg--wide">
+                <p class="msg__title">2 responses</p>
+                <ul class="replies">
+                  <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
+                  <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                </ul>
+                <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Get responses</h3>
+            <p>Other people accept your rate or suggest their own. Ratings show who you are dealing with.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Choose one</h3>
-            <p>You pick a response. A private deal chat opens between the two of you.</p>
+          <li class="story__item">
+            <div class="story__screen" aria-hidden="true">
+              <div class="msg msg--me">Jana, 24.70</div>
+              <div class="msg msg--wide">
+                <p class="msg__title">Deal chat with Jana</p>
+                <p>Write here. The bot passes your messages on.</p>
+              </div>
+              <div class="msg msg--wide msg--relay">
+                <p class="msg__from">Jana</p>
+                <p>Hi! Main square at 17:30?</p>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Choose one</h3>
+            <p>You pick a response, and a private deal chat opens between the two of you.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Meet and rate</h3>
-            <p>You agree on a meeting point on the map, exchange cash, confirm and rate each other.</p>
+          <li class="story__item">
+            <div class="story__screen" aria-hidden="true">
+              <div class="msg msg--wide">
+                <p class="msg__title">Meeting point</p>
+                <div class="map"><span class="map__pin"></span></div>
+              </div>
+              <div class="msg msg--wide">
+                <p class="msg__title">Rate Jana</p>
+                <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Meet and rate</h3>
+            <p>Agree on a place on the map, exchange cash, confirm and rate each other.</p>
           </li>
         </ol>
+
         <p class="callout">The bot never holds money. It runs the deal: relays messages in the deal chat, collects confirmations and ratings.</p>
+
         <div class="notes">
           <div>
             <h3 class="h3">VIP offers</h3>
@@ -119,7 +266,7 @@
     </section>
 
     <!-- Architecture -->
-    <section class="section" id="architecture" aria-labelledby="arch-title">
+    <section class="section section--mist" id="architecture" aria-labelledby="arch-title">
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2 h2--sm" id="arch-title">Under the hood</h2>
@@ -204,19 +351,39 @@
     </section>
 
     <!-- Trust & safety -->
-    <section class="section section--mist" aria-labelledby="trust-title">
+    <section class="section" aria-labelledby="trust-title">
       <div class="wrap">
-        <div class="prose">
+        <div class="section-head">
           <h2 class="h2 h2--sm" id="trust-title">Trust is the product</h2>
-          <p>People meet strangers to exchange cash. These are the safety features I built.</p>
-          <ul class="ticks">
-            <li><strong>Encrypted deal log.</strong> <span>Every deal chat is logged, and the log is encrypted.</span></li>
-            <li><strong>Account checks.</strong> <span>Phone verification, Telegram account age, and lookups in the CAS and LOLS spam databases.</span></li>
-            <li><strong>Weighted reputation.</strong> <span>A reputation score built from weighted ratings.</span></li>
-            <li><strong>Risk score.</strong> <span>A risk score that alerts moderators.</span></li>
-            <li><strong>Complaints.</strong> <span>Users can file a complaint about a deal.</span></li>
-          </ul>
+          <p class="lead">People meet strangers to exchange cash. These are the safety features I built.</p>
         </div>
+        <ul class="icon-grid">
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><path d="M12 14.5v2"/></svg>
+            <h3 class="h3">Encrypted deal log</h3>
+            <p>Every deal chat is logged, and the log is encrypted.</p>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="m15.5 12 2 2 4-4"/></svg>
+            <h3 class="h3">Account checks</h3>
+            <p>Phone verification, Telegram account age, and lookups in the CAS and LOLS spam databases.</p>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>
+            <h3 class="h3">Weighted reputation</h3>
+            <p>A reputation score built from weighted ratings.</p>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 17.5a8.5 8.5 0 1 1 17 0"/><path d="m12 17.5 4.5-6"/><path d="M6 13.5h1M12 8v1M17 13.5h1"/></svg>
+            <h3 class="h3">Risk score</h3>
+            <p>A risk score that alerts moderators.</p>
+          </li>
+          <li>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 21V4"/><path d="M5.5 4.5h11.5l-2.5 4 2.5 4H5.5"/></svg>
+            <h3 class="h3">Complaints</h3>
+            <p>Users can file a complaint about a deal.</p>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -224,27 +391,32 @@
     <section class="section section--stage" id="quality" aria-labelledby="quality-title">
       <div class="wrap">
         <h2 class="visually-hidden" id="quality-title">Quality</h2>
-        <p class="bignum">4,808</p>
-        <p class="bignum__label">automated tests in pytest. Every pull request has to pass all of them.</p>
-        <div class="split">
+        <div class="quality">
           <div>
-            <h3 class="h3">Four kinds of tests</h3>
-            <ul class="ticks">
+            <p class="bignum">4,808</p>
+            <p class="bignum__label">automated tests in pytest. Every pull request has to pass all of them.</p>
+            <ul class="ticks quality__kinds">
               <li><strong>Unit tests</strong> <span>for the core logic.</span></li>
               <li><strong>Integration tests</strong> <span>against a real PostgreSQL database.</span></li>
               <li><strong>End-to-end tests</strong> <span>that run the bot, the worker and the admin together.</span></li>
               <li><strong>Property-based tests</strong> <span>with Hypothesis, for inputs nobody thought of.</span></li>
             </ul>
           </div>
-          <div>
-            <h3 class="h3">Every pull request, in order</h3>
-            <ol class="pipeline">
-              <li>ruff</li>
-              <li>mypy</li>
-              <li>pytest</li>
-              <li>gitleaks</li>
+          <div class="checks">
+            <div class="checks__head">
+              <span class="checks__badge" aria-hidden="true"></span>
+              <div>
+                <p class="checks__title">4 of 4 checks passed</p>
+                <p class="checks__sub">GitHub Actions, on every pull request</p>
+              </div>
+            </div>
+            <ol class="checks__list">
+              <li><span class="checks__ok" aria-hidden="true"></span><b>ruff</b><span>Lint</span></li>
+              <li><span class="checks__ok" aria-hidden="true"></span><b>mypy</b><span>Type checks</span></li>
+              <li><span class="checks__ok" aria-hidden="true"></span><b>pytest</b><span>4,808 tests</span></li>
+              <li><span class="checks__ok" aria-hidden="true"></span><b>gitleaks</b><span>Secret scan</span></li>
             </ol>
-            <p class="small pipeline__note">Linting, type checks, the full test suite and a secret scan run on GitHub Actions. I set up the test infrastructure underneath: database fixtures, a test bench for the bot and the end-to-end tests.</p>
+            <p class="checks__note">I set up the test infrastructure underneath: database fixtures, a test bench for the bot and the end-to-end tests.</p>
           </div>
         </div>
       </div>
@@ -253,9 +425,16 @@
     <!-- My role -->
     <section class="section" id="role" aria-labelledby="role-title">
       <div class="wrap">
-        <div class="section-head">
-          <h2 class="h2 h2--sm" id="role-title">My role</h2>
-          <p class="lead">The idea and the original spec came from my teammate. We write the issues, make the decisions and check the results; Claude Code agents write the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
+        <div class="role-head">
+          <picture class="role-head__photo">
+            <source type="image/avif" srcset="../assets/img/portrait-480.avif">
+            <source type="image/webp" srcset="../assets/img/portrait-480.webp">
+            <img src="../assets/img/portrait-480.jpg" width="480" height="600" alt="Aleksandr Balaev" loading="lazy" decoding="async">
+          </picture>
+          <div class="section-head">
+            <h2 class="h2 h2--sm" id="role-title">My role</h2>
+            <p class="lead">The idea and the original spec came from my teammate. We write the issues, make the decisions and check the results; Claude Code agents write the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
+          </div>
         </div>
         <div class="split">
           <div>
@@ -288,9 +467,10 @@
         <p class="lead">The repository is private, so I’m happy to show the code, the tests and the admin panel on a call.</p>
         <div class="actions actions--center">
           <a class="btn" href="mailto:alexalbalaeff@gmail.com?subject=Personal%20Exchange%20Bot%20walkthrough">Email me</a>
-          <a class="more" href="https://www.linkedin.com/in/albalaeff" rel="noopener">LinkedIn</a>
+          <a class="more" href="../assets/docs/Aleksandr-Balaev-CV.pdf" type="application/pdf">Download CV</a>
           <a class="more" href="https://t.me/pfxybot" rel="noopener">Try the bot</a>
         </div>
+        <p class="contact__email small">alexalbalaeff@gmail.com</p>
       </div>
     </section>
   </main>
