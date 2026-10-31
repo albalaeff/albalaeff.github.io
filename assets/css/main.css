@@ -1681,3 +1681,85 @@ main:has(> .section--mist:last-child) + .footer {
   justify-content: space-between;
   gap: 20px 32px;
 }
+
+/* ---------- Agent workflow (6 steps + setup) ---------- */
+@media (min-width: 880px) {
+  .steps--six {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 56px 40px;
+  }
+
+  .steps--six .step:not(:last-child)::after {
+    right: -26px;
+  }
+
+  .steps--six .step:nth-child(3n)::after {
+    content: none;
+  }
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.label {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 980px;
+  background: color-mix(in srgb, var(--blue) 10%, transparent);
+  color: var(--link);
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.setup {
+  margin-top: clamp(64px, 8vw, 96px);
+}
+
+.setup__list {
+  margin-top: 20px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.setup__list div {
+  display: grid;
+  gap: 6px;
+  padding-block: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 760px) {
+  .setup__list div {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+.setup__list dt {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.setup__list dd {
+  max-width: 44em;
+  color: var(--graphite);
+}
+
+.setup__list .labels {
+  margin: 0 0 10px;
+}
+
+.setup__list .labels + .labels {
+  margin-top: -4px;
+}
+
+.ticks .label {
+  padding: 0 7px;
+  font-size: 0.8em;
+}

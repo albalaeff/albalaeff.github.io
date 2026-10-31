@@ -223,26 +223,46 @@
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2" id="approach-title">Agents write the code.<br>I own the result.</h2>
-          <p class="lead">I came to software through testing, so I treat AI output like any other code: specified up front and verified before it ships.</p>
+          <p class="lead">On Personal Exchange Bot every change runs through the same loop: one GitHub issue, one coding agent, one fresh session. People stay in the loop through the issue thread.</p>
         </div>
-        <ol class="steps">
+        <ol class="steps steps--six">
           <li class="step">
-            <h3 class="h3">Specify</h3>
-            <p>Break the work into small tasks with clear acceptance criteria. Decisions stay with people.</p>
+            <h3 class="h3">Open an issue</h3>
+            <p>Every task starts as a GitHub issue. Its labels set how strong the agent is, using Claude Code’s own values.</p>
+            <p class="labels"><code class="label">model:opus</code><code class="label">effort:xhigh</code></p>
           </li>
           <li class="step">
-            <h3 class="h3">Delegate</h3>
-            <p>Claude Code agents write the code and the tests. Every change is its own pull request.</p>
+            <h3 class="h3">Start an agent</h3>
+            <p>A session manager runs the repo’s issue watcher and starts one headless Claude Code agent per issue, in its own git worktree and a fresh session.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Confirm the task</h3>
+            <p>Before it writes any code, the agent reviews the issue and posts a comment with how it understood the task, plus sample screens where relevant. If something needs discussing, it happens in that thread.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Build</h3>
+            <p>The agent writes the code and the tests on its own branch and delivers them as a pull request through the repo’s existing workflow.</p>
           </li>
           <li class="step">
             <h3 class="h3">Verify</h3>
-            <p>Each pull request passes CI on GitHub Actions: ruff, mypy, the full pytest suite and a gitleaks secret scan. Then we review it.</p>
+            <p>CI on GitHub Actions runs ruff, mypy, the full pytest suite and a gitleaks secret scan. Then a person reviews the result.</p>
           </li>
           <li class="step">
-            <h3 class="h3">Ship</h3>
-            <p>A new release goes live on trial in production and rolls itself back if the checks fail.</p>
+            <h3 class="h3">Hand off</h3>
+            <p>When it finishes, the agent leaves a handoff for the next session. Agents talk to each other through issue comments, in plain language anyone can read.</p>
           </li>
         </ol>
+
+        <div class="setup">
+          <h3 class="h3">The setup</h3>
+          <dl class="setup__list">
+            <div><dt>Agent</dt><dd>Headless Claude Code, one per issue. Never two agents on the same issue.</dd></div>
+            <div><dt>Isolation</dt><dd>Each agent works in its own git worktree, on its own branch, starting from a fresh session.</dd></div>
+            <div><dt>Agent power</dt><dd><span class="labels"><code class="label">model:haiku</code><code class="label">model:sonnet</code><code class="label">model:opus</code></span><span class="labels"><code class="label">effort:low</code><code class="label">effort:medium</code><code class="label">effort:high</code><code class="label">effort:xhigh</code><code class="label">effort:max</code></span>No labels means Opus at xhigh effort.</dd></div>
+            <div><dt>Parallel work</dt><dd>Up to two agents at a time. Other issues wait in a queue.</dd></div>
+            <div><dt>Onboarding</dt><dd>One setup script. Every developer signs in with their own GitHub and Claude accounts; no shared secrets in the repo.</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 

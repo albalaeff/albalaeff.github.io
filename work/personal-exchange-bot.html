@@ -255,7 +255,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2 h2--sm" id="role-title">My role</h2>
-          <p class="lead">The idea and the original spec came from my teammate. We set the tasks, made the decisions and checked the results; Claude Code agents wrote the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
+          <p class="lead">The idea and the original spec came from my teammate. We write the issues, make the decisions and check the results; Claude Code agents write the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
         </div>
         <div class="split">
           <div>
@@ -268,12 +268,13 @@
             </ul>
           </div>
           <div>
-            <h3 class="h3">How I work with agents</h3>
+            <h3 class="h3">How we work with agents</h3>
             <ul class="ticks">
-              <li><strong>Small tasks, clear criteria.</strong> <span>One change per pull request, through automated checks.</span></li>
-              <li><strong>Environment checks.</strong> <span>Tooling that checks an agent’s environment before it works.</span></li>
-              <li><strong>A map of every screen.</strong> <span>All 173 screens in one place, so agents and people can find their way around.</span></li>
-              <li><strong>Automatic handoff.</strong> <span>Work passes automatically from one agent session to the next.</span></li>
+              <li><strong>One issue, one agent.</strong> <span>A session manager watches the repo and starts a headless Claude Code agent for each GitHub issue, in its own git worktree and a fresh session.</span></li>
+              <li><strong>Labels set the power.</strong> <span>Issue labels pick the model, from <code class="label">model:haiku</code> to <code class="label">model:opus</code>, and the effort, from <code class="label">effort:low</code> to <code class="label">effort:max</code>. Without labels the agent runs on Opus at xhigh effort.</span></li>
+              <li><strong>Confirm before coding.</strong> <span>The agent posts how it understood the issue, with sample screens where relevant, and only then starts coding.</span></li>
+              <li><strong>Plain-language handoffs.</strong> <span>Agents hand off to the next session and talk through issue comments a person can read.</span></li>
+              <li><strong>Tooling I built for them.</strong> <span>Environment checks, a map of all 173 screens and automatic handoff between sessions.</span></li>
             </ul>
           </div>
         </div>
