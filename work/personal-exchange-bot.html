@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Exchange Bot, a case study by Aleksandr Balaev</title>
+  <meta name="description" content="How a team of two and Claude Code agents built Personal Exchange Bot: peer-to-peer cash exchange in Telegram, 4,808 automated tests, in production since October 2026.">
+  <link rel="canonical" href="https://albalaeff.github.io/work/personal-exchange-bot.html">
+  <meta name="theme-color" content="#000000">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Aleksandr Balaev">
+  <meta property="og:title" content="Personal Exchange Bot, a case study">
+  <meta property="og:description" content="Peer-to-peer cash exchange in Telegram, co-built with Claude Code agents. 4,808 automated tests, 173 screens, 156 currencies.">
+  <meta property="og:url" content="https://albalaeff.github.io/work/personal-exchange-bot.html">
+  <meta property="og:image" content="https://albalaeff.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <nav class="nav" aria-label="Main">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="../index.html">Aleksandr Balaev</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span>
+        <b class="visually-hidden">Menu</b>
+      </button>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__links">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#architecture">Architecture</a></li>
+          <li><a href="#quality">Quality</a></li>
+          <li><a href="#role">My role</a></li>
+        </ul>
+        <a class="nav__cta" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Hero -->
+    <header class="section--stage cs-hero">
+      <div class="wrap">
+        <a class="back" href="../index.html#project">All work</a>
+        <h1 class="display">Personal Exchange Bot</h1>
+        <p class="lead">Peer-to-peer currency exchange inside Telegram. Built by a team of two people and a crew of Claude Code agents, in production since October 2026.</p>
+        <div class="actions">
+          <a class="btn" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
+          <a class="more" href="#contact">Ask for a walkthrough</a>
+        </div>
+        <dl class="facts">
+          <div><dt>Role</dt><dd>Co-developer, team of two</dd></div>
+          <div><dt>First version</dt><dd>1 October 2026</dd></div>
+          <div><dt>Status</dt><dd>In production</dd></div>
+          <div><dt>Code</dt><dd>Private, demo on request</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <!-- The idea -->
+    <section class="section" aria-labelledby="idea-title">
+      <div class="wrap">
+        <div class="prose">
+          <h2 class="h2 h2--sm" id="idea-title">Cash exchange between people, without the guesswork.</h2>
+          <p>Swapping cash with another person can beat a bank or an exchange office. The hard parts are finding someone nearby, agreeing on a fair rate and trusting a stranger. Personal Exchange Bot handles all three inside Telegram.</p>
+          <p>It works with 156 currencies in 10 countries, from Czechia to Thailand, and speaks English, Ukrainian and Russian.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How a deal works -->
+    <section class="section section--mist" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h2 h2--sm" id="how-title">How a deal works</h2>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <h3 class="h3">Post an offer</h3>
+            <p>“I give 1,000 EUR, I want 24,500 CZK.” Market and exchange-office rates help you set a fair price.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Get responses</h3>
+            <p>Other people accept your rate or suggest their own.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Choose one</h3>
+            <p>You pick a response. A private deal chat opens between the two of you.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Meet and rate</h3>
+            <p>You agree on a meeting point on the map, exchange cash, confirm and rate each other.</p>
+          </li>
+        </ol>
+        <p class="callout">The bot never holds money. It runs the deal: relays messages in the deal chat, collects confirmations and ratings.</p>
+        <div class="notes">
+          <div>
+            <h3 class="h3">VIP offers</h3>
+            <p>Offers can be promoted for Telegram Stars.</p>
+          </div>
+          <div>
+            <h3 class="h3">Inline mode and city channels</h3>
+            <p>Share offers in any chat, or follow a channel for your city.</p>
+          </div>
+          <div>
+            <h3 class="h3">Moderation</h3>
+            <p>A web admin and an Android app for the moderators.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section class="section" id="architecture" aria-labelledby="arch-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h2 h2--sm" id="arch-title">Under the hood</h2>
+          <p class="lead">Python 3.14 and aiogram 3 on our own server, with every piece of state in PostgreSQL.</p>
+        </div>
+
+        <div class="arch" role="img" aria-label="Architecture: Telegram sends updates over a webhook to Caddy on a Hetzner Cloud server in Germany. Behind Caddy run the bot, a worker, the admin and a Mini App, all in Docker and all using one PostgreSQL database. The worker pulls rates from ExchangeRate-API, BestChange, Revolut and Wise. Moderators also use an Android admin app.">
+          <div class="arch__row arch__row--split">
+            <div class="node node--outline">
+              <p class="node__title">Telegram</p>
+              <p class="node__text">Users, inline mode, city channels, Telegram Stars</p>
+            </div>
+            <div class="node node--outline">
+              <p class="node__title">Android admin app</p>
+              <p class="node__text">Kotlin, Jetpack Compose</p>
+            </div>
+          </div>
+          <p class="arch__link">Webhook over HTTPS</p>
+          <div class="arch__row arch__row--split">
+            <div class="arch__host">
+              <p class="arch__host-label">Hetzner Cloud, Germany. Docker.</p>
+              <div class="node">
+                <p class="node__title">Caddy</p>
+                <p class="node__text">HTTPS</p>
+              </div>
+              <div class="arch__row arch__row--4">
+                <div class="node node--accent">
+                  <p class="node__title">Bot</p>
+                  <p class="node__text">aiogram 3, 173 screens</p>
+                </div>
+                <div class="node">
+                  <p class="node__title">Worker</p>
+                  <p class="node__text">Background jobs, rate updates</p>
+                </div>
+                <div class="node">
+                  <p class="node__title">Admin</p>
+                  <p class="node__text">FastAPI web, two-factor login</p>
+                </div>
+                <div class="node">
+                  <p class="node__title">Mini App</p>
+                  <p class="node__text">Meeting map, MapLibre and OpenStreetMap</p>
+                </div>
+              </div>
+              <div class="node">
+                <p class="node__title">PostgreSQL</p>
+                <p class="node__text">Users, offers, deals, ratings, the notification queue and dialog state. SQLAlchemy and Alembic.</p>
+              </div>
+            </div>
+            <div class="arch__host">
+              <p class="arch__host-label">Rate sources</p>
+              <div class="node node--outline">
+                <p class="node__title">ExchangeRate-API</p>
+                <p class="node__text">Market rate</p>
+              </div>
+              <div class="node node--outline">
+                <p class="node__title">BestChange</p>
+                <p class="node__text">Exchange-office rate</p>
+              </div>
+              <div class="node node--outline">
+                <p class="node__title">Revolut and Wise</p>
+                <p class="node__text">For comparison</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notes">
+          <div>
+            <h3 class="h3">Stateless bot</h3>
+            <p>Even dialog state lives in PostgreSQL, so the bot process itself keeps nothing in memory.</p>
+          </div>
+          <div>
+            <h3 class="h3">Fresh rates</h3>
+            <p>A background worker refreshes rates from four sources and stores them in the database.</p>
+          </div>
+          <div>
+            <h3 class="h3">Safe releases</h3>
+            <p>A new release first goes live on trial in production and rolls itself back if the checks fail.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & safety -->
+    <section class="section section--mist" aria-labelledby="trust-title">
+      <div class="wrap">
+        <div class="prose">
+          <h2 class="h2 h2--sm" id="trust-title">Trust is the product</h2>
+          <p>People meet strangers to exchange cash. These are the safety features I built.</p>
+          <ul class="ticks">
+            <li><strong>Encrypted deal log.</strong> <span>Every deal chat is logged, and the log is encrypted.</span></li>
+            <li><strong>Account checks.</strong> <span>Phone verification, Telegram account age, and lookups in the CAS and LOLS spam databases.</span></li>
+            <li><strong>Weighted reputation.</strong> <span>A reputation score built from weighted ratings.</span></li>
+            <li><strong>Risk score.</strong> <span>A risk score that alerts moderators.</span></li>
+            <li><strong>Complaints.</strong> <span>Users can file a complaint about a deal.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quality -->
+    <section class="section section--stage" id="quality" aria-labelledby="quality-title">
+      <div class="wrap">
+        <h2 class="visually-hidden" id="quality-title">Quality</h2>
+        <p class="bignum">4,808</p>
+        <p class="bignum__label">automated tests in pytest. Every pull request has to pass all of them.</p>
+        <div class="split">
+          <div>
+            <h3 class="h3">Four kinds of tests</h3>
+            <ul class="ticks">
+              <li><strong>Unit tests</strong> <span>for the core logic.</span></li>
+              <li><strong>Integration tests</strong> <span>against a real PostgreSQL database.</span></li>
+              <li><strong>End-to-end tests</strong> <span>that run the bot, the worker and the admin together.</span></li>
+              <li><strong>Property-based tests</strong> <span>with Hypothesis, for inputs nobody thought of.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h3">Every pull request, in order</h3>
+            <ol class="pipeline">
+              <li>ruff</li>
+              <li>mypy</li>
+              <li>pytest</li>
+              <li>gitleaks</li>
+            </ol>
+            <p class="small pipeline__note">Linting, type checks, the full test suite and a secret scan run on GitHub Actions. I set up the test infrastructure underneath: database fixtures, a test bench for the bot and the end-to-end tests.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My role -->
+    <section class="section" id="role" aria-labelledby="role-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h2 h2--sm" id="role-title">My role</h2>
+          <p class="lead">The idea and the original spec came from my teammate. We set the tasks, made the decisions and checked the results; Claude Code agents wrote the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
+        </div>
+        <div class="split">
+          <div>
+            <h3 class="h3">What I built</h3>
+            <ul class="ticks">
+              <li><strong>Version one in two days.</strong> <span>From the spec, on 30 September and 1 October: project skeleton, database, bot, offer feed, responses, deals, ratings, notifications, moderation, the web admin with two-factor login, Docker and tests.</span></li>
+              <li><strong>Interface and design.</strong> <span>Admin redesign, mobile version, System and Stats sections, ban management, and the Android admin app.</span></li>
+              <li><strong>Trust and safety.</strong> <span>Encrypted deal log, account checks, weighted reputation, risk score, complaints.</span></li>
+              <li><strong>Rates and languages.</strong> <span>Rate sources, reading amounts like “1000 euro” or “€1000” from text, Ukrainian and the language packs.</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="h3">How I work with agents</h3>
+            <ul class="ticks">
+              <li><strong>Small tasks, clear criteria.</strong> <span>One change per pull request, through automated checks.</span></li>
+              <li><strong>Environment checks.</strong> <span>Tooling that checks an agent’s environment before it works.</span></li>
+              <li><strong>A map of every screen.</strong> <span>All 173 screens in one place, so agents and people can find their way around.</span></li>
+              <li><strong>Automatic handoff.</strong> <span>Work passes automatically from one agent session to the next.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section--mist contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap wrap--narrow">
+        <h2 class="h2" id="contact-title">Want a walkthrough?</h2>
+        <p class="lead">The repository is private, so I’m happy to show the code, the tests and the admin panel on a call.</p>
+        <div class="actions actions--center">
+          <a class="btn" href="mailto:alexalbalaeff@gmail.com?subject=Personal%20Exchange%20Bot%20walkthrough">Email me</a>
+          <a class="more" href="https://www.linkedin.com/in/albalaeff" rel="noopener">LinkedIn</a>
+          <a class="more" href="https://t.me/pfxybot" rel="noopener">Try the bot</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>© 2026 Aleksandr Balaev. Built with HTML, CSS and Claude Code.</p>
+      <ul class="footer__links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="mailto:alexalbalaeff@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/albalaeff" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/albalaeff" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

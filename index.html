@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aleksandr Balaev, Junior AI Engineer</title>
+  <meta name="description" content="Junior AI engineer in Slovakia. I co-built Personal Exchange Bot, a production Telegram service, with Claude Code agents: 4,808 automated tests, 173 screens, live since October 2026.">
+  <link rel="canonical" href="https://albalaeff.github.io/">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Aleksandr Balaev">
+  <meta property="og:title" content="Aleksandr Balaev, Junior AI Engineer">
+  <meta property="og:description" content="I build software with AI agents and make sure it works. Featured: Personal Exchange Bot, co-built with Claude Code and in production since October 2026.">
+  <meta property="og:url" content="https://albalaeff.github.io/">
+  <meta property="og:image" content="https://albalaeff.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aleksandr Balaev, Junior AI Engineer">
+  <meta property="profile:first_name" content="Aleksandr">
+  <meta property="profile:last_name" content="Balaev">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aleksandr Balaev",
+    "jobTitle": "Junior AI Engineer",
+    "url": "https://albalaeff.github.io/",
+    "image": "https://albalaeff.github.io/assets/img/portrait.jpg",
+    "email": "mailto:alexalbalaeff@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Nitra", "addressCountry": "SK" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Constantine the Philosopher University in Nitra" },
+    "knowsLanguage": ["en", "ru", "sk"],
+    "hasCredential": {
+      "@type": "EducationalOccupationalCredential",
+      "name": "ISTQB Certified Tester Foundation Level v4.0",
+      "credentialCategory": "certificate",
+      "recognizedBy": { "@type": "Organization", "name": "Czech and Slovak Quality Board (CaSQB)" }
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/albalaeff",
+      "https://github.com/albalaeff"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <nav class="nav" aria-label="Main">
+    <div class="wrap nav__inner">
+      <a class="nav__brand" href="#top">Aleksandr Balaev</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+        <span></span><span></span>
+        <b class="visually-hidden">Menu</b>
+      </button>
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__links">
+          <li><a href="#project">Project</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#resume">Résumé</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+        </ul>
+        <a class="nav__cta" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- Hero -->
+    <header class="hero" id="top">
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="hero__role">Junior AI Engineer</p>
+          <h1 class="display">Aleksandr<br>Balaev</h1>
+          <p class="lead">I build software with AI agents and make sure it works. Most recently I co-built Personal Exchange Bot, a Telegram service for exchanging cash between people. It has been in production since October.</p>
+          <div class="actions">
+            <a class="btn" href="#project">See the project</a>
+            <a class="more" href="assets/docs/Aleksandr-Balaev-CV.pdf" type="application/pdf">Download CV</a>
+          </div>
+          <p class="hero__meta">Based in Nitra, Slovakia. Open to roles in Bratislava or remote.</p>
+        </div>
+        <figure class="hero__photo">
+          <picture>
+            <source type="image/avif" srcset="assets/img/portrait-480.avif 480w, assets/img/portrait.avif 731w" sizes="(min-width: 880px) 420px, 92vw">
+            <source type="image/webp" srcset="assets/img/portrait-480.webp 480w, assets/img/portrait.webp 731w" sizes="(min-width: 880px) 420px, 92vw">
+            <img src="assets/img/portrait.jpg" width="731" height="913" alt="Aleksandr Balaev in a black hoodie, standing by a baroque stone wall" fetchpriority="high">
+          </picture>
+        </figure>
+      </div>
+    </header>
+
+    <!-- Featured project: the product stage -->
+    <section class="section section--stage" id="project" aria-labelledby="project-title">
+      <div class="wrap stage__head">
+        <h2 class="h2" id="project-title">Personal Exchange Bot</h2>
+        <p class="lead">Swap cash with people nearby, at a rate you can check, right inside Telegram.</p>
+        <div class="actions actions--center">
+          <a class="btn" href="work/personal-exchange-bot.html">Read the case study</a>
+          <a class="more" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
+        </div>
+      </div>
+
+      <div class="demo">
+        <div class="phone" role="img" aria-label="Demo of a deal in Personal Exchange Bot: an offer goes live, two people respond, the author picks one, they choose a meeting point, exchange cash and rate each other.">
+          <div class="phone__screen" aria-hidden="true">
+            <div class="phone__status"></div>
+            <div class="chat-head">
+              <div class="chat-head__avatar">PX</div>
+              <div>
+                <p class="chat-head__name">Personal Exchange Bot</p>
+                <p class="chat-head__sub">bot</p>
+              </div>
+            </div>
+            <div class="chat" data-demo>
+              <div class="msg msg--wide" data-step="bot">
+                <p class="msg__title">Your offer is live in Nitra</p>
+                <dl class="offer">
+                  <div><dt>You give</dt><dd>1,000 EUR</dd></div>
+                  <div><dt>You get</dt><dd>24,500 CZK</dd></div>
+                  <div><dt>Your rate</dt><dd>24.50</dd></div>
+                  <div><dt>Market rate</dt><dd>24.31</dd></div>
+                </dl>
+              </div>
+              <div class="msg msg--wide" data-step="bot">
+                <p class="msg__title">2 responses</p>
+                <ul class="replies">
+                  <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
+                  <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                </ul>
+                <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+              </div>
+              <div class="msg msg--me" data-step="me">Jana, 24.70</div>
+              <div class="msg msg--wide" data-step="bot">
+                <p class="msg__title">Deal started with Jana</p>
+                <p>Pick a place to meet.</p>
+                <div class="map"><span class="map__pin"></span></div>
+                <p class="msg__note">Main square, today at 17:30</p>
+              </div>
+              <div class="msg msg--me" data-step="me">Got 24,700 CZK. Done!</div>
+              <div class="msg msg--wide" data-step="bot">
+                <p class="msg__title">Both sides confirmed</p>
+                <p>How was the exchange with Jana?</p>
+                <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo__caption">
+          <p class="small">A simplified deal, from offer to rating. The bot never holds money: it runs the deal chat, collects confirmations and ratings.</p>
+          <button class="demo__replay" type="button" hidden>Replay</button>
+        </div>
+      </div>
+
+      <div class="wrap figures">
+        <div class="figure">
+          <p class="figure__num">4,808</p>
+          <p class="figure__label">automated tests, run on every pull request</p>
+        </div>
+        <div class="figure">
+          <p class="figure__num">173</p>
+          <p class="figure__label">screens in the bot</p>
+        </div>
+        <div class="figure">
+          <p class="figure__num">156</p>
+          <p class="figure__label">currencies you can trade</p>
+        </div>
+        <div class="figure">
+          <p class="figure__num">10</p>
+          <p class="figure__label">countries, from Czechia to Thailand</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- My part -->
+    <section class="section section--mist" aria-labelledby="part-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h2" id="part-title">Built in a team of two.</h2>
+          <p class="lead">The idea and the original spec came from my teammate. I turned the spec into a working product in two days, then kept building.</p>
+        </div>
+        <div class="features">
+          <div class="feature">
+            <h3 class="h3">Version one in two days</h3>
+            <p>On 30 September and 1 October I built the first working version end to end: database, offer feed, responses, deals and ratings, notifications, moderation, a web admin with two-factor login, Docker and tests.</p>
+          </div>
+          <div class="feature">
+            <h3 class="h3">Interface and design</h3>
+            <p>Bot flows and the admin panel: the redesign, the mobile version, the System and Stats sections, ban management, and an Android admin app in Kotlin with Jetpack Compose.</p>
+          </div>
+          <div class="feature">
+            <h3 class="h3">Trust and safety</h3>
+            <p>An encrypted log of every deal chat, phone and Telegram account checks against the CAS and LOLS spam databases, weighted reputation, a risk score that alerts moderators, and deal complaints.</p>
+          </div>
+          <div class="feature">
+            <h3 class="h3">Rates and languages</h3>
+            <p>Market rates from ExchangeRate-API, exchange-office rates from BestChange, Revolut and Wise for comparison. The bot reads amounts written as text, like “1000 euro” or “€1000”. I also added Ukrainian and the language packs.</p>
+          </div>
+          <div class="feature">
+            <h3 class="h3">Test infrastructure</h3>
+            <p>I laid the groundwork for testing: database fixtures, a test bench for the bot, and end-to-end tests that run the bot, the worker and the admin together.</p>
+          </div>
+          <div class="feature">
+            <h3 class="h3">Tooling for AI agents</h3>
+            <p>Environment checks, a map of every screen, and automatic handoff between agent sessions, so each new session picks up exactly where the last one stopped.</p>
+          </div>
+        </div>
+        <p class="contrib">153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="section" id="approach" aria-labelledby="approach-title">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h2" id="approach-title">Agents write the code.<br>I own the result.</h2>
+          <p class="lead">I came to software through testing, so I treat AI output like any other code: specified up front and verified before it ships.</p>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <h3 class="h3">Specify</h3>
+            <p>Break the work into small tasks with clear acceptance criteria. Decisions stay with people.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Delegate</h3>
+            <p>Claude Code agents write the code and the tests. Every change is its own pull request.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Verify</h3>
+            <p>Each pull request passes CI on GitHub Actions: ruff, mypy, the full pytest suite and a gitleaks secret scan. Then we review it.</p>
+          </li>
+          <li class="step">
+            <h3 class="h3">Ship</h3>
+            <p>A new release goes live on trial in production and rolls itself back if the checks fail.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section section--mist" id="about" aria-labelledby="about-title">
+      <div class="wrap about">
+        <figure class="about__photo">
+          <picture>
+            <source type="image/avif" srcset="assets/img/vienna-480.avif 480w, assets/img/vienna.avif 719w" sizes="(min-width: 880px) 400px, 92vw">
+            <source type="image/webp" srcset="assets/img/vienna-480.webp 480w, assets/img/vienna.webp 719w" sizes="(min-width: 880px) 400px, 92vw">
+            <img src="assets/img/vienna.jpg" width="719" height="913" alt="Aleksandr in a grey coat on a Vienna street, with St. Stephen’s Cathedral behind him" loading="lazy" decoding="async">
+          </picture>
+        </figure>
+        <div class="about__text">
+          <h2 class="h2" id="about-title">Hi, I’m Alex.</h2>
+          <p>I live in Nitra, Slovakia, and study English at Constantine the Philosopher University. I came into tech through testing: I’m an ISTQB-certified tester and test web and mobile apps for real clients on uTest.</p>
+          <p>Now I’m focused on AI engineering: building real products with AI agents, and making sure what they ship actually works.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Résumé -->
+    <section class="section" id="resume" aria-labelledby="resume-title">
+      <div class="wrap">
+        <div class="section-row">
+          <h2 class="h2" id="resume-title">Résumé</h2>
+          <a class="btn btn--ghost" href="assets/docs/Aleksandr-Balaev-CV.pdf" type="application/pdf">Download CV (PDF)</a>
+        </div>
+        <div class="specs">
+          <section class="spec" aria-labelledby="spec-exp">
+            <h3 class="spec__label" id="spec-exp">Experience</h3>
+            <div>
+              <article class="entry">
+                <h4 class="entry__title">QA Crowdtester</h4>
+                <p class="entry__meta">uTest, remote. June 2026 to present.</p>
+                <p class="entry__text">Exploratory and functional testing of web and mobile apps for real clients. Reproducible bug reports with clear steps and expected results; logs and HTTP traffic analysed in Fiddler and Charles Proxy.</p>
+              </article>
+              <article class="entry">
+                <h4 class="entry__title">Gaming Club Administrator</h4>
+                <p class="entry__meta">Colizeum, Moscow. May 2021 to January 2023.</p>
+                <p class="entry__text">Technical support for customers, maintenance of gaming workstations and software, technical setup for CS:GO and Dota 2 tournaments.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="spec" aria-labelledby="spec-edu">
+            <h3 class="spec__label" id="spec-edu">Education</h3>
+            <div>
+              <div class="edu">
+                <picture class="edu__logo">
+                  <source type="image/webp" srcset="assets/img/ukf-logo.webp">
+                  <img src="assets/img/ukf-logo.png" width="192" height="192" alt="Logo of Constantine the Philosopher University in Nitra" loading="lazy" decoding="async">
+                </picture>
+                <div>
+                  <h4 class="entry__title">Constantine the Philosopher University in Nitra</h4>
+                  <p class="entry__meta">Bachelor’s in English Studies. September 2023 to 2027 (expected).</p>
+                </div>
+              </div>
+              <div class="edu edu--sub">
+                <picture class="edu__logo">
+                  <source type="image/webp" srcset="assets/img/ff-logo.webp">
+                  <img src="assets/img/ff-logo.png" width="192" height="192" alt="Logo of the Faculty of Arts" loading="lazy" decoding="async">
+                </picture>
+                <div>
+                  <h4 class="entry__title">Faculty of Arts</h4>
+                  <p class="entry__text">Advanced English communication, text analysis, research and public speaking.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="spec" aria-labelledby="spec-skills">
+            <h3 class="spec__label" id="spec-skills">Skills</h3>
+            <dl class="skillset">
+              <div>
+                <dt>AI engineering</dt>
+                <dd>Claude Code, agentic engineering, AI agent orchestration, tooling and handoff for agent sessions</dd>
+              </div>
+              <div>
+                <dt>Shipped with</dt>
+                <dd>Python, aiogram 3, FastAPI, PostgreSQL, SQLAlchemy, Alembic, Docker, Caddy, Hetzner Cloud, GitHub Actions, Telegram Mini Apps, MapLibre, Kotlin and Jetpack Compose</dd>
+              </div>
+              <div>
+                <dt>Quality</dt>
+                <dd>pytest, Hypothesis, ruff, mypy, gitleaks, exploratory and functional testing, bug reporting, Fiddler, Charles Proxy, Jira</dd>
+              </div>
+              <div>
+                <dt>Learning now</dt>
+                <dd>Python, SQL, API testing</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="spec" aria-labelledby="spec-lang">
+            <h3 class="spec__label" id="spec-lang">Languages</h3>
+            <dl class="langs">
+              <div><dt>English</dt><dd>Upper-intermediate (B2)</dd></div>
+              <div><dt>Russian</dt><dd>Native</dd></div>
+              <div><dt>Slovak</dt><dd>Full understanding, speaking at B1</dd></div>
+            </dl>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates -->
+    <section class="section section--mist" id="certificates" aria-labelledby="cert-title">
+      <div class="wrap">
+        <h2 class="h2" id="cert-title">Certificates</h2>
+        <div class="certs">
+          <article class="cert cert--feature">
+            <a class="cert__thumb" href="assets/docs/ISTQB-CTFL-v4-Aleksandr-Balaev.pdf" aria-label="Open the ISTQB certificate (PDF)">
+              <picture>
+                <source type="image/webp" srcset="assets/img/istqb-certificate.webp">
+                <img src="assets/img/istqb-certificate.jpg" width="640" height="905" alt="" loading="lazy" decoding="async">
+              </picture>
+            </a>
+            <div>
+              <h3 class="cert__title">ISTQB Certified Tester, Foundation Level</h3>
+              <p class="cert__text">Syllabus v4.0. Issued on 24 September 2026 by CaSQB, the Czech and Slovak Quality Board.</p>
+              <p class="cert__id small">Certificate no. CTFL4-2026-02382-CASQB</p>
+              <div class="actions">
+                <a class="btn" href="assets/docs/ISTQB-CTFL-v4-Aleksandr-Balaev.pdf">View certificate</a>
+                <a class="more" href="https://scr.istqb.org/" rel="noopener">Verify in the ISTQB register</a>
+              </div>
+            </div>
+          </article>
+          <article class="cert cert--pending">
+            <div>
+              <h3 class="h3">GitHub Foundations</h3>
+              <p class="cert__text">Exam GH-900.</p>
+            </div>
+            <span class="status">In preparation</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap wrap--narrow">
+        <h2 class="h2" id="contact-title">Let’s talk.</h2>
+        <p class="lead">I’m looking for a junior role in AI engineering, in Bratislava or remote. The bot’s code is private, so I’m happy to walk you through it on a call.</p>
+        <div class="actions actions--center">
+          <a class="btn" href="mailto:alexalbalaeff@gmail.com">Email me</a>
+          <a class="more" href="assets/docs/Aleksandr-Balaev-CV.pdf" type="application/pdf">Download CV</a>
+          <a class="more" href="https://www.linkedin.com/in/albalaeff" rel="noopener">LinkedIn</a>
+          <a class="more" href="https://github.com/albalaeff" rel="noopener">GitHub</a>
+        </div>
+        <p class="contact__email small">alexalbalaeff@gmail.com</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <p>© 2026 Aleksandr Balaev. Built with HTML, CSS and Claude Code.</p>
+      <ul class="footer__links">
+        <li><a href="mailto:alexalbalaeff@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/albalaeff" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/albalaeff" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
