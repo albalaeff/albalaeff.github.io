@@ -25,7 +25,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261031-6">
 
   <script type="application/ld+json">
   {
@@ -225,43 +225,111 @@
           <h2 class="h2" id="approach-title">Agents write the code.<br>I own the result.</h2>
           <p class="lead">On Personal Exchange Bot every change runs through the same loop: one GitHub issue, one coding agent, one fresh session. People stay in the loop through the issue thread.</p>
         </div>
-        <ol class="steps steps--six">
-          <li class="step">
-            <h3 class="h3">Open an issue</h3>
-            <p>Every task starts as a GitHub issue. Its labels set how strong the agent is, using Claude Code’s own values.</p>
-            <p class="labels"><code class="label">model:opus</code><code class="label">effort:xhigh</code></p>
+
+        <ol class="story flow">
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <p class="mini__meta"><span class="state"></span>Open issue #57</p>
+                <p class="mini__title">Show the exchange-office rate on the offer card</p>
+                <p class="labels"><code class="label">model:opus</code><code class="label">effort:xhigh</code></p>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Open an issue</h3>
+            <p>Every task starts as a GitHub issue. Its labels set the model and the effort, using Claude Code’s own values.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Start an agent</h3>
-            <p>A session manager runs the repo’s issue watcher and starts one headless Claude Code agent per issue, in its own git worktree and a fresh session.</p>
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <p class="mini__meta">Session manager</p>
+                <div class="lanes">
+                  <div class="lane"><span class="state"></span><b>#57</b><span>opus, xhigh</span><em>running</em></div>
+                  <div class="lane"><span class="state"></span><b>#58</b><span>sonnet, high</span><em>running</em></div>
+                  <div class="lane"><span class="state state--queued"></span><b>#59</b><span>haiku, low</span><em>queued</em></div>
+                </div>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Start an agent</h3>
+            <p>A session manager runs the issue watcher and starts one headless Claude Code agent per issue, each in its own git worktree.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Confirm the task</h3>
-            <p>Before it writes any code, the agent reviews the issue and posts a comment with how it understood the task, plus sample screens where relevant. If something needs discussing, it happens in that thread.</p>
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <p class="mini__meta"><span class="avatar">AI</span>Agent commented on #57</p>
+                <p class="mini__body">My understanding: add a second rate under the market rate. Sample screen:</p>
+                <div class="sketch">
+                  <div><span>Market rate</span><b>24.31</b></div>
+                  <div class="sketch__new"><span>Exchange offices</span><b>24.05</b></div>
+                </div>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Confirm the task</h3>
+            <p>Before any code, the agent posts how it understood the issue, with sample screens where relevant.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Build</h3>
-            <p>The agent writes the code and the tests on its own branch and delivers them as a pull request through the repo’s existing workflow.</p>
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <p class="mini__meta">Pull request for #57</p>
+                <ol class="commits">
+                  <li>Add the exchange-office rate row</li>
+                  <li>Cover the rate row with tests</li>
+                </ol>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Build</h3>
+            <p>The agent writes the code and the tests on its own branch and opens a pull request through the existing workflow.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Verify</h3>
-            <p>CI on GitHub Actions runs ruff, mypy, the full pytest suite and a gitleaks secret scan. Then a person reviews the result.</p>
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <ul class="mini-checks">
+                  <li><span class="checks__ok"></span><b>ruff</b></li>
+                  <li><span class="checks__ok"></span><b>mypy</b></li>
+                  <li><span class="checks__ok"></span><b>pytest</b><em>4,808 tests</em></li>
+                  <li><span class="checks__ok"></span><b>gitleaks</b></li>
+                </ul>
+              </div>
+              <div class="mini mini--row"><span class="avatar avatar--person">AB</span>Review approved</div>
+            </div>
+            <h3 class="h3 story__title">Verify</h3>
+            <p>CI runs ruff, mypy, the full pytest suite and a secret scan. Then a person reviews the result.</p>
           </li>
-          <li class="step">
-            <h3 class="h3">Hand off</h3>
-            <p>When it finishes, the agent leaves a handoff for the next session. Agents talk to each other through issue comments, in plain language anyone can read.</p>
+          <li class="story__item">
+            <div class="frame" aria-hidden="true">
+              <div class="mini">
+                <p class="mini__meta">Handoff for the next session</p>
+                <p class="mini__body"><b>Done:</b> rate row and tests, #57 merged.</p>
+                <p class="mini__body"><b>Next:</b> translate the new label into Ukrainian.</p>
+              </div>
+            </div>
+            <h3 class="h3 story__title">Hand off</h3>
+            <p>The agent leaves a handoff for the next session. Agents talk through issue comments, in plain language anyone can read.</p>
           </li>
         </ol>
+        <p class="flow__caption small">A simplified example of one issue going through the loop.</p>
 
-        <div class="setup">
-          <h3 class="h3">The setup</h3>
-          <dl class="setup__list">
-            <div><dt>Agent</dt><dd>Headless Claude Code, one per issue. Never two agents on the same issue.</dd></div>
-            <div><dt>Isolation</dt><dd>Each agent works in its own git worktree, on its own branch, starting from a fresh session.</dd></div>
-            <div><dt>Agent power</dt><dd><span class="labels"><code class="label">model:haiku</code><code class="label">model:sonnet</code><code class="label">model:opus</code></span><span class="labels"><code class="label">effort:low</code><code class="label">effort:medium</code><code class="label">effort:high</code><code class="label">effort:xhigh</code><code class="label">effort:max</code></span>No labels means Opus at xhigh effort.</dd></div>
-            <div><dt>Parallel work</dt><dd>Up to two agents at a time. Other issues wait in a queue.</dd></div>
-            <div><dt>Onboarding</dt><dd>One setup script. Every developer signs in with their own GitHub and Claude accounts; no shared secrets in the repo.</dd></div>
-          </dl>
+        <div class="bento">
+          <div class="tile">
+            <p class="tile__big">1 : 1</p>
+            <p>One issue, one agent. Each works in its own git worktree, on its own branch, from a fresh session.</p>
+          </div>
+          <div class="tile">
+            <p class="tile__big">2</p>
+            <p>agents at a time. Other issues wait in a queue, and no issue ever gets two agents.</p>
+          </div>
+          <div class="tile">
+            <p class="tile__big tile__big--word">Opus, xhigh</p>
+            <p>the default model and effort when an issue has no labels.</p>
+          </div>
+          <div class="tile tile--wide">
+            <p class="tile__title">Labels set the power</p>
+            <p class="labels"><code class="label">model:haiku</code><code class="label">model:sonnet</code><code class="label">model:opus</code></p>
+            <p class="labels"><code class="label">effort:low</code><code class="label">effort:medium</code><code class="label">effort:high</code><code class="label">effort:xhigh</code><code class="label">effort:max</code></p>
+          </div>
+          <div class="tile">
+            <p class="tile__big">0</p>
+            <p>shared secrets. One setup script, and everyone signs in with their own GitHub and Claude accounts.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -295,15 +363,27 @@
           <section class="spec" aria-labelledby="spec-exp">
             <h3 class="spec__label" id="spec-exp">Experience</h3>
             <div>
-              <article class="entry">
+              <article class="entry edu">
+                <picture class="edu__logo">
+                  <source type="image/webp" srcset="assets/img/utest-logo.webp">
+                  <img src="assets/img/utest-logo.png" width="192" height="192" alt="uTest logo" loading="lazy" decoding="async">
+                </picture>
+                <div>
                 <h4 class="entry__title">QA Crowdtester</h4>
                 <p class="entry__meta">uTest, remote. June 2026 to present.</p>
                 <p class="entry__text">Exploratory and functional testing of web and mobile apps for real clients. Reproducible bug reports with clear steps and expected results; logs and HTTP traffic analysed in Fiddler and Charles Proxy.</p>
+                </div>
               </article>
-              <article class="entry">
+              <article class="entry edu">
+                <picture class="edu__logo">
+                  <source type="image/webp" srcset="assets/img/colizeum-logo.webp">
+                  <img src="assets/img/colizeum-logo.png" width="192" height="192" alt="Colizeum logo" loading="lazy" decoding="async">
+                </picture>
+                <div>
                 <h4 class="entry__title">Gaming Club Administrator</h4>
                 <p class="entry__meta">Colizeum, Moscow. May 2021 to January 2023.</p>
                 <p class="entry__text">Technical support for customers, maintenance of gaming workstations and software, technical setup for CS:GO and Dota 2 tournaments.</p>
+                </div>
               </article>
             </div>
           </section>
@@ -428,6 +508,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/main.js?v=20261031-6" defer></script>
 </body>
 </html>
