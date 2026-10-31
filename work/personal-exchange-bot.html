@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Personal Exchange Bot, a case study by Aleksandr Balaev</title>
-  <meta name="description" content="How a team of two and Claude Code agents built Personal Exchange Bot: peer-to-peer cash exchange in Telegram, 4,808 automated tests, in production since October 2026.">
+  <meta name="description" content="How a team of two and Claude Code agents built Personal Exchange Bot: a Telegram service that helps Russians abroad exchange rubles person to person, instead of risky exchange chats. 4,808 automated tests, in production since October 2026.">
   <link rel="canonical" href="https://albalaeff.github.io/work/personal-exchange-bot.html">
   <meta name="theme-color" content="#000000">
 
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Aleksandr Balaev">
   <meta property="og:title" content="Personal Exchange Bot, a case study">
-  <meta property="og:description" content="Peer-to-peer cash exchange in Telegram, co-built with Claude Code agents. 4,808 automated tests, 173 screens, 156 currencies.">
+  <meta property="og:description" content="Rubles for local currency, person to person, in Telegram. Co-built with Claude Code agents: 4,808 automated tests, 173 screens.">
   <meta property="og:url" content="https://albalaeff.github.io/work/personal-exchange-bot.html">
   <meta property="og:image" content="https://albalaeff.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../assets/css/main.css?v=20261031-6">
+  <link rel="stylesheet" href="../assets/css/main.css?v=20261031-7">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -53,7 +53,7 @@
         <div class="cs-hero__grid">
           <div>
             <h1 class="display">Personal Exchange Bot</h1>
-            <p class="lead">Peer-to-peer currency exchange inside Telegram. Built by a team of two people and a crew of Claude Code agents, in production since October 2026.</p>
+            <p class="lead">Helps Russians living abroad exchange rubles for local currency, person to person, right in Telegram. Built by a team of two people and a crew of Claude Code agents, in production since October 2026.</p>
             <div class="actions">
               <a class="btn" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
               <a class="more" href="#contact">Ask for a walkthrough</a>
@@ -73,33 +73,33 @@
                 </div>
                 <div class="chat" data-demo>
                   <div class="msg msg--wide" data-step="bot">
-                    <p class="msg__title">Your offer is live in Nitra</p>
+                    <p class="msg__title">Your offer is live in Prague</p>
                     <dl class="offer">
-                      <div><dt>You give</dt><dd>1,000 EUR</dd></div>
-                      <div><dt>You get</dt><dd>24,500 CZK</dd></div>
-                      <div><dt>Your rate</dt><dd>24.50</dd></div>
-                      <div><dt>Market rate</dt><dd>24.31</dd></div>
+                      <div><dt>You give</dt><dd>50,000 RUB</dd></div>
+                      <div><dt>You get</dt><dd>13,500 CZK</dd></div>
+                      <div><dt>Your rate</dt><dd>3.70</dd></div>
+                      <div><dt>Market rate</dt><dd>3.64</dd></div>
                     </dl>
                   </div>
                   <div class="msg msg--wide" data-step="bot">
                     <p class="msg__title">2 responses</p>
                     <ul class="replies">
-                      <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
-                      <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                      <li><span>Dmitry <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">3.70</span></li>
+                      <li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li>
                     </ul>
-                    <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+                    <div class="chips"><span class="chip">Dmitry</span><span class="chip">Anna</span></div>
                   </div>
-                  <div class="msg msg--me" data-step="me">Jana, 24.70</div>
+                  <div class="msg msg--me" data-step="me">Anna, 3.65</div>
                   <div class="msg msg--wide" data-step="bot">
-                    <p class="msg__title">Deal started with Jana</p>
+                    <p class="msg__title">Deal started with Anna</p>
                     <p>Pick a place to meet.</p>
                     <div class="map"><span class="map__pin"></span></div>
-                    <p class="msg__note">Main square, today at 17:30</p>
+                    <p class="msg__note">Wenceslas Square, today at 17:30</p>
                   </div>
-                  <div class="msg msg--me" data-step="me">Got 24,700 CZK. Done!</div>
+                  <div class="msg msg--me" data-step="me">Got 13,700 CZK. Done!</div>
                   <div class="msg msg--wide" data-step="bot">
                     <p class="msg__title">Both sides confirmed</p>
-                    <p>How was the exchange with Jana?</p>
+                    <p>How was the exchange with Anna?</p>
                     <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
                   </div>
                 </div>
@@ -121,40 +121,66 @@
       </div>
     </header>
 
-    <!-- Why it exists, with photos -->
+    <!-- The problem: before and after -->
     <section class="section section--mist" aria-labelledby="idea-title">
       <div class="wrap">
         <div class="section-head">
-          <h2 class="h2 h2--sm" id="idea-title">Many borders.<br>Many currencies.</h2>
-          <p class="lead">Central Europe is small, but a few hours on the road take you from the euro to the koruna or the forint. Swapping cash with another person can beat a bank or an exchange office. The hard parts are finding someone nearby, agreeing on a fair rate and trusting a stranger. Personal Exchange Bot handles all three inside Telegram.</p>
+          <h2 class="h2 h2--sm" id="idea-title">Rubles abroad: no banks, only chats.</h2>
+          <p class="lead">Since the 2022 sanctions, most banks and exchange offices in Europe no longer exchange rubles. Yet many Russians live abroad and need local money, like Czech koruna. Until now they swapped it in Telegram chats.</p>
         </div>
 
-        <div class="gallery">
-          <figure>
-            <picture>
-              <source type="image/avif" srcset="../assets/img/vienna-480.avif 480w, ../assets/img/vienna.avif 719w" sizes="(min-width: 760px) 330px, 78vw">
-              <source type="image/webp" srcset="../assets/img/vienna-480.webp 480w, ../assets/img/vienna.webp 719w" sizes="(min-width: 760px) 330px, 78vw">
-              <img src="../assets/img/vienna.jpg" width="719" height="913" alt="Aleksandr in a grey coat on a Vienna street, St. Stephen’s Cathedral behind him" loading="lazy" decoding="async">
-            </picture>
-            <figcaption><strong>Vienna.</strong> Euro, like at home in Slovakia.</figcaption>
+        <div class="versus">
+          <figure class="versus__side">
+            <div class="versus__screen" aria-hidden="true">
+              <p class="versus__chat-title">RUB ⇄ CZK exchange chat</p>
+              <div class="msg msg--wide"><p class="msg__from">Igor</p><p>Swapping 50k RUB for crowns, DM me</p></div>
+              <div class="msg msg--wide"><p class="msg__from msg__from--changer">Changer</p><p>Best rate today only: 4.10!!! Hurry</p></div>
+              <div class="msg msg--wide"><p class="msg__from">Olga</p><p>Need 20k CZK urgently, who has?</p></div>
+              <div class="msg msg--wide msg--alert"><p class="msg__from">Sergey</p><p>Careful, he took the money and blocked me</p></div>
+              <div class="msg msg--wide"><p class="msg__from msg__from--changer">Changer</p><p>Rate is 4.20 now, prices go up</p></div>
+            </div>
+            <figcaption><strong>Before.</strong> Posts typed by hand, rates pushed by changers, scammers in the crowd.</figcaption>
           </figure>
-          <figure>
-            <picture>
-              <source type="image/avif" srcset="../assets/img/budapest-480.avif 480w, ../assets/img/budapest.avif 685w" sizes="(min-width: 760px) 330px, 78vw">
-              <source type="image/webp" srcset="../assets/img/budapest-480.webp 480w, ../assets/img/budapest.webp 685w" sizes="(min-width: 760px) 330px, 78vw">
-              <img src="../assets/img/budapest.jpg" width="685" height="913" alt="Aleksandr in a black hood in front of St. Stephen’s Basilica in Budapest" loading="lazy" decoding="async">
-            </picture>
-            <figcaption><strong>Budapest.</strong> Forint, the moment you cross the border.</figcaption>
-          </figure>
-          <figure>
-            <picture>
-              <source type="image/avif" srcset="../assets/img/onroad-480.avif 480w, ../assets/img/onroad.avif 514w" sizes="(min-width: 760px) 330px, 78vw">
-              <source type="image/webp" srcset="../assets/img/onroad-480.webp 480w, ../assets/img/onroad.webp 514w" sizes="(min-width: 760px) 330px, 78vw">
-              <img class="gallery__img--top" src="../assets/img/onroad.jpg" width="514" height="913" alt="Aleksandr on a bus, sunlight across his face" loading="lazy" decoding="async">
-            </picture>
-            <figcaption><strong>On the road.</strong> Somewhere in between.</figcaption>
+          <figure class="versus__side">
+            <div class="versus__screen" aria-hidden="true">
+              <div class="msg msg--wide">
+                <p class="msg__title">Your offer is live in Prague</p>
+                <dl class="offer">
+                  <div><dt>You give</dt><dd>50,000 RUB</dd></div>
+                  <div><dt>You get</dt><dd>13,500 CZK</dd></div>
+                  <div><dt>Your rate</dt><dd>3.70</dd></div>
+                  <div><dt>Market rate</dt><dd>3.64</dd></div>
+                </dl>
+              </div>
+              <div class="msg msg--wide">
+                <p class="msg__title">New response</p>
+                <ul class="replies">
+                  <li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li>
+                </ul>
+                <p class="trust"><span class="trust__chip">Phone checked</span><span class="trust__chip">Not in spam lists</span></p>
+              </div>
+            </div>
+            <figcaption><strong>With the bot.</strong> A structured offer, the market rate beside it, a checked counterparty with a rating.</figcaption>
           </figure>
         </div>
+
+        <ul class="fixes">
+          <li>
+            <p class="fixes__from">Posts typed by hand</p>
+            <h3 class="h3">Structured offers</h3>
+            <p>You post what you give and what you want; others accept or suggest their rate.</p>
+          </li>
+          <li>
+            <p class="fixes__from">Rates pushed by changers</p>
+            <h3 class="h3">Rates to compare</h3>
+            <p>Market rate from ExchangeRate-API, exchanger rates from BestChange, Revolut and Wise for comparison.</p>
+          </li>
+          <li>
+            <p class="fixes__from">Scammers in the chat</p>
+            <h3 class="h3">Checks and reputation</h3>
+            <p>Phone and account checks, spam databases, weighted ratings, a risk score and complaints.</p>
+          </li>
+        </ul>
 
         <div class="figures">
           <div class="figure">
@@ -191,25 +217,25 @@
               <div class="msg msg--wide">
                 <p class="msg__title">Your offer is live</p>
                 <dl class="offer">
-                  <div><dt>You give</dt><dd>1,000 EUR</dd></div>
-                  <div><dt>You get</dt><dd>24,500 CZK</dd></div>
-                  <div><dt>Your rate</dt><dd>24.50</dd></div>
-                  <div><dt>Market rate</dt><dd>24.31</dd></div>
+                  <div><dt>You give</dt><dd>50,000 RUB</dd></div>
+                  <div><dt>You get</dt><dd>13,500 CZK</dd></div>
+                  <div><dt>Your rate</dt><dd>3.70</dd></div>
+                  <div><dt>Market rate</dt><dd>3.64</dd></div>
                 </dl>
               </div>
             </div>
             <h3 class="h3 story__title">Post an offer</h3>
-            <p>“I give 1,000 EUR, I want 24,500 CZK.” Market and exchange-office rates help you set a fair price.</p>
+            <p>“I give 50,000 RUB, I want 13,500 CZK.” Market and exchanger rates show whether the price is fair.</p>
           </li>
           <li class="story__item">
             <div class="story__screen" aria-hidden="true">
               <div class="msg msg--wide">
                 <p class="msg__title">2 responses</p>
                 <ul class="replies">
-                  <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
-                  <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                  <li><span>Dmitry <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">3.70</span></li>
+                  <li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li>
                 </ul>
-                <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+                <div class="chips"><span class="chip">Dmitry</span><span class="chip">Anna</span></div>
               </div>
             </div>
             <h3 class="h3 story__title">Get responses</h3>
@@ -217,14 +243,14 @@
           </li>
           <li class="story__item">
             <div class="story__screen" aria-hidden="true">
-              <div class="msg msg--me">Jana, 24.70</div>
+              <div class="msg msg--me">Anna, 3.65</div>
               <div class="msg msg--wide">
-                <p class="msg__title">Deal chat with Jana</p>
+                <p class="msg__title">Deal chat with Anna</p>
                 <p>Write here. The bot passes your messages on.</p>
               </div>
               <div class="msg msg--wide msg--relay">
-                <p class="msg__from">Jana</p>
-                <p>Hi! Main square at 17:30?</p>
+                <p class="msg__from">Anna</p>
+                <p>Hi! Wenceslas Square at 17:30?</p>
               </div>
             </div>
             <h3 class="h3 story__title">Choose one</h3>
@@ -237,7 +263,7 @@
                 <div class="map"><span class="map__pin"></span></div>
               </div>
               <div class="msg msg--wide">
-                <p class="msg__title">Rate Jana</p>
+                <p class="msg__title">Rate Anna</p>
                 <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
               </div>
             </div>
@@ -323,7 +349,7 @@
               </div>
               <div class="node node--outline">
                 <p class="node__title">BestChange</p>
-                <p class="node__text">Exchange-office rate</p>
+                <p class="node__text">Exchanger rate</p>
               </div>
               <div class="node node--outline">
                 <p class="node__title">Revolut and Wise</p>
@@ -355,7 +381,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2 h2--sm" id="trust-title">Trust is the product</h2>
-          <p class="lead">People meet strangers to exchange cash. These are the safety features I built.</p>
+          <p class="lead">Exchange chats are full of scammers, and people meet strangers to swap cash. These are the safety features I built so they can trust each other.</p>
         </div>
         <ul class="icon-grid">
           <li>
@@ -425,16 +451,9 @@
     <!-- My role -->
     <section class="section" id="role" aria-labelledby="role-title">
       <div class="wrap">
-        <div class="role-head">
-          <picture class="role-head__photo">
-            <source type="image/avif" srcset="../assets/img/portrait-480.avif">
-            <source type="image/webp" srcset="../assets/img/portrait-480.webp">
-            <img src="../assets/img/portrait-480.jpg" width="480" height="600" alt="Aleksandr Balaev" loading="lazy" decoding="async">
-          </picture>
-          <div class="section-head">
-            <h2 class="h2 h2--sm" id="role-title">My role</h2>
-            <p class="lead">The idea and the original spec came from my teammate. We write the issues, make the decisions and check the results; Claude Code agents write the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
-          </div>
+        <div class="section-head">
+          <h2 class="h2 h2--sm" id="role-title">My role</h2>
+          <p class="lead">The idea and the original spec came from my teammate. We write the issues, make the decisions and check the results; Claude Code agents write the code and the tests. 153 of the 365 commits and 103 of the 327 merged pull requests are mine.</p>
         </div>
         <div class="split">
           <div>
@@ -487,6 +506,6 @@
     </div>
   </footer>
 
-  <script src="../assets/js/main.js?v=20261031-6" defer></script>
+  <script src="../assets/js/main.js?v=20261031-7" defer></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aleksandr Balaev, Junior AI Engineer</title>
-  <meta name="description" content="Junior AI engineer in Slovakia. I co-built Personal Exchange Bot, a production Telegram service, with Claude Code agents: 4,808 automated tests, 173 screens, live since October 2026.">
+  <meta name="description" content="Junior AI engineer in Slovakia. I co-built Personal Exchange Bot with Claude Code agents: a Telegram service that helps Russians abroad exchange rubles person to person. 4,808 automated tests, live since October 2026.">
   <link rel="canonical" href="https://albalaeff.github.io/">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -25,7 +25,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/main.css?v=20261031-6">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261031-7">
 
   <script type="application/ld+json">
   {
@@ -82,7 +82,7 @@
         <div class="hero__text">
           <p class="hero__role">Junior AI Engineer</p>
           <h1 class="display">Aleksandr<br>Balaev</h1>
-          <p class="lead">I build software with AI agents and make sure it works. Most recently I co-built Personal Exchange Bot, a Telegram service for exchanging cash between people. It has been in production since October.</p>
+          <p class="lead">I build software with AI agents and make sure it works. Most recently I co-built Personal Exchange Bot, a Telegram service that helps Russians living abroad exchange rubles for local currency, person to person. It has been in production since October.</p>
           <div class="actions">
             <a class="btn" href="#project">See the project</a>
             <a class="more" href="assets/docs/Aleksandr-Balaev-CV.pdf" type="application/pdf">Download CV</a>
@@ -91,9 +91,9 @@
         </div>
         <figure class="hero__photo">
           <picture>
-            <source type="image/avif" srcset="assets/img/portrait-480.avif 480w, assets/img/portrait.avif 731w" sizes="(min-width: 880px) 420px, 92vw">
-            <source type="image/webp" srcset="assets/img/portrait-480.webp 480w, assets/img/portrait.webp 731w" sizes="(min-width: 880px) 420px, 92vw">
-            <img src="assets/img/portrait.jpg" width="731" height="913" alt="Aleksandr Balaev in a black hoodie, standing by a baroque stone wall" fetchpriority="high">
+            <source type="image/avif" srcset="assets/img/portrait-480.avif 480w, assets/img/portrait.avif 731w" sizes="(min-width: 880px) 520px, 92vw">
+            <source type="image/webp" srcset="assets/img/portrait-480.webp 480w, assets/img/portrait.webp 731w" sizes="(min-width: 880px) 520px, 92vw">
+            <img src="assets/img/portrait.jpg" width="731" height="913" alt="Aleksandr Balaev in a black hoodie, standing by a baroque stone wall in Dresden" fetchpriority="high">
           </picture>
         </figure>
       </div>
@@ -103,12 +103,31 @@
     <section class="section section--stage" id="project" aria-labelledby="project-title">
       <div class="wrap stage__head">
         <h2 class="h2" id="project-title">Personal Exchange Bot</h2>
-        <p class="lead">Swap cash with people nearby, at a rate you can check, right inside Telegram.</p>
+        <p class="lead">Rubles for local currency, person to person. A safer alternative to exchange chats, with a rate you can check.</p>
         <div class="actions actions--center">
           <a class="btn" href="work/personal-exchange-bot.html">Read the case study</a>
           <a class="more" href="https://t.me/pfxybot" rel="noopener">Open in Telegram</a>
         </div>
       </div>
+
+      <div class="wrap problem">
+        <div class="problem__item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9 12 4.5 20.5 9"/><path d="M5.5 9.5v8M10 9.5v8M14 9.5v8M18.5 9.5v8"/><path d="M3.5 19.5h17"/><path d="m3 3 18 18"/></svg>
+          <h3 class="h3">Banks won’t take rubles</h3>
+          <p>Since the 2022 sanctions, most banks and exchange offices in Europe no longer exchange rubles. Yet many Russians live abroad and need local money, like Czech koruna.</p>
+        </div>
+        <div class="problem__item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8.5L6 20.5V17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M12 8.5v3.5"/><path d="M12 14.6v.01"/></svg>
+          <h3 class="h3">Chats are full of scammers</h3>
+          <p>So people swap in Telegram chats, typing “I’ll swap this much for that much” by hand, with scammers among them.</p>
+        </div>
+        <div class="problem__item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 17.5 5.5-5.5 4 4 7.5-7.5"/><path d="M15 8.5h5.5V14"/></svg>
+          <h3 class="h3">Changers push the rate</h3>
+          <p>Money changers in those chats inflate the rate and set the trend for everyone else.</p>
+        </div>
+      </div>
+      <p class="wrap problem__answer">The bot turns this into a clear process: structured offers, rates to compare, checked accounts and ratings.</p>
 
       <div class="demo">
         <div class="phone" role="img" aria-label="Demo of a deal in Personal Exchange Bot: an offer goes live, two people respond, the author picks one, they choose a meeting point, exchange cash and rate each other.">
@@ -123,33 +142,33 @@
             </div>
             <div class="chat" data-demo>
               <div class="msg msg--wide" data-step="bot">
-                <p class="msg__title">Your offer is live in Nitra</p>
+                <p class="msg__title">Your offer is live in Prague</p>
                 <dl class="offer">
-                  <div><dt>You give</dt><dd>1,000 EUR</dd></div>
-                  <div><dt>You get</dt><dd>24,500 CZK</dd></div>
-                  <div><dt>Your rate</dt><dd>24.50</dd></div>
-                  <div><dt>Market rate</dt><dd>24.31</dd></div>
+                  <div><dt>You give</dt><dd>50,000 RUB</dd></div>
+                  <div><dt>You get</dt><dd>13,500 CZK</dd></div>
+                  <div><dt>Your rate</dt><dd>3.70</dd></div>
+                  <div><dt>Market rate</dt><dd>3.64</dd></div>
                 </dl>
               </div>
               <div class="msg msg--wide" data-step="bot">
                 <p class="msg__title">2 responses</p>
                 <ul class="replies">
-                  <li><span>Marek <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">24.50</span></li>
-                  <li><span>Jana <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">24.70</span></li>
+                  <li><span>Dmitry <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">3.70</span></li>
+                  <li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li>
                 </ul>
-                <div class="chips"><span class="chip">Marek</span><span class="chip">Jana</span></div>
+                <div class="chips"><span class="chip">Dmitry</span><span class="chip">Anna</span></div>
               </div>
-              <div class="msg msg--me" data-step="me">Jana, 24.70</div>
+              <div class="msg msg--me" data-step="me">Anna, 3.65</div>
               <div class="msg msg--wide" data-step="bot">
-                <p class="msg__title">Deal started with Jana</p>
+                <p class="msg__title">Deal started with Anna</p>
                 <p>Pick a place to meet.</p>
                 <div class="map"><span class="map__pin"></span></div>
-                <p class="msg__note">Main square, today at 17:30</p>
+                <p class="msg__note">Wenceslas Square, today at 17:30</p>
               </div>
-              <div class="msg msg--me" data-step="me">Got 24,700 CZK. Done!</div>
+              <div class="msg msg--me" data-step="me">Got 13,700 CZK. Done!</div>
               <div class="msg msg--wide" data-step="bot">
                 <p class="msg__title">Both sides confirmed</p>
-                <p>How was the exchange with Jana?</p>
+                <p>How was the exchange with Anna?</p>
                 <div class="chips chips--stars"><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span><span class="chip">★</span></div>
               </div>
             </div>
@@ -203,7 +222,7 @@
           </div>
           <div class="feature">
             <h3 class="h3">Rates and languages</h3>
-            <p>Market rates from ExchangeRate-API, exchange-office rates from BestChange, Revolut and Wise for comparison. The bot reads amounts written as text, like “1000 euro” or “€1000”. I also added Ukrainian and the language packs.</p>
+            <p>Market rates from ExchangeRate-API, exchanger rates from BestChange, Revolut and Wise for comparison. The bot reads amounts written as text, like “1000 euro” or “€1000”. I also added Ukrainian and the language packs.</p>
           </div>
           <div class="feature">
             <h3 class="h3">Test infrastructure</h3>
@@ -231,7 +250,7 @@
             <div class="frame" aria-hidden="true">
               <div class="mini">
                 <p class="mini__meta"><span class="state"></span>Open issue #57</p>
-                <p class="mini__title">Show the exchange-office rate on the offer card</p>
+                <p class="mini__title">Show the exchanger rate on the offer card</p>
                 <p class="labels"><code class="label">model:opus</code><code class="label">effort:xhigh</code></p>
               </div>
             </div>
@@ -258,8 +277,8 @@
                 <p class="mini__meta"><span class="avatar">AI</span>Agent commented on #57</p>
                 <p class="mini__body">My understanding: add a second rate under the market rate. Sample screen:</p>
                 <div class="sketch">
-                  <div><span>Market rate</span><b>24.31</b></div>
-                  <div class="sketch__new"><span>Exchange offices</span><b>24.05</b></div>
+                  <div><span>Market rate</span><b>3.64</b></div>
+                  <div class="sketch__new"><span>Exchangers</span><b>3.81</b></div>
                 </div>
               </div>
             </div>
@@ -271,7 +290,7 @@
               <div class="mini">
                 <p class="mini__meta">Pull request for #57</p>
                 <ol class="commits">
-                  <li>Add the exchange-office rate row</li>
+                  <li>Add the exchanger rate row</li>
                   <li>Cover the rate row with tests</li>
                 </ol>
               </div>
@@ -337,18 +356,37 @@
     <!-- About -->
     <section class="section section--mist" id="about" aria-labelledby="about-title">
       <div class="wrap about">
-        <figure class="about__photo">
-          <picture>
-            <source type="image/avif" srcset="assets/img/vienna-480.avif 480w, assets/img/vienna.avif 719w" sizes="(min-width: 880px) 400px, 92vw">
-            <source type="image/webp" srcset="assets/img/vienna-480.webp 480w, assets/img/vienna.webp 719w" sizes="(min-width: 880px) 400px, 92vw">
-            <img src="assets/img/vienna.jpg" width="719" height="913" alt="Aleksandr in a grey coat on a Vienna street, with St. Stephen’s Cathedral behind him" loading="lazy" decoding="async">
-          </picture>
-        </figure>
+        <h2 class="h2" id="about-title">Hi, I’m Alex.</h2>
         <div class="about__text">
-          <h2 class="h2" id="about-title">Hi, I’m Alex.</h2>
           <p>I live in Nitra, Slovakia, and study English at Constantine the Philosopher University. I came into tech through testing: I’m an ISTQB-certified tester and test web and mobile apps for real clients on uTest.</p>
           <p>Now I’m focused on AI engineering: building real products with AI agents, and making sure what they ship actually works.</p>
         </div>
+      </div>
+      <div class="gallery gallery--bleed">
+        <figure>
+          <picture>
+            <source type="image/avif" srcset="assets/img/vienna-480.avif 480w, assets/img/vienna.avif 719w" sizes="(min-width: 760px) 32vw, 82vw">
+            <source type="image/webp" srcset="assets/img/vienna-480.webp 480w, assets/img/vienna.webp 719w" sizes="(min-width: 760px) 32vw, 82vw">
+            <img src="assets/img/vienna.jpg" width="719" height="913" alt="Aleksandr in a grey coat on a Vienna street, St. Stephen’s Cathedral behind him" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>Vienna</figcaption>
+        </figure>
+        <figure>
+          <picture>
+            <source type="image/avif" srcset="assets/img/budapest-480.avif 480w, assets/img/budapest.avif 685w" sizes="(min-width: 760px) 32vw, 82vw">
+            <source type="image/webp" srcset="assets/img/budapest-480.webp 480w, assets/img/budapest.webp 685w" sizes="(min-width: 760px) 32vw, 82vw">
+            <img src="assets/img/budapest.jpg" width="685" height="913" alt="Aleksandr in a black hood in front of St. Stephen’s Basilica in Budapest" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>Budapest</figcaption>
+        </figure>
+        <figure>
+          <picture>
+            <source type="image/avif" srcset="assets/img/onroad-480.avif 480w, assets/img/onroad.avif 514w" sizes="(min-width: 760px) 32vw, 82vw">
+            <source type="image/webp" srcset="assets/img/onroad-480.webp 480w, assets/img/onroad.webp 514w" sizes="(min-width: 760px) 32vw, 82vw">
+            <img class="gallery__img--top" src="assets/img/onroad.jpg" width="514" height="913" alt="Aleksandr on a bus, sunlight across his face" loading="lazy" decoding="async">
+          </picture>
+          <figcaption>On the road</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -508,6 +546,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=20261031-6" defer></script>
+  <script src="assets/js/main.js?v=20261031-7" defer></script>
 </body>
 </html>
