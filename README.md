@@ -1,7 +1,7 @@
 # albalaeff.github.io
 
 Personal site of **Aleksandr Balaev**, junior AI engineer based in Nitra, Slovakia.
-Live at **https://albalaeff.github.io**.
+Live at **https://albalaeff.eu** (the old address, albalaeff.github.io, redirects there).
 
 The featured project is [Personal Exchange Bot](https://t.me/pfxybot), a peer-to-peer
 currency exchange in Telegram, co-built with Claude Code agents.
@@ -40,7 +40,7 @@ python3 -m http.server 8000
 
 ## Site editor (`/admin/`)
 
-**https://albalaeff.github.io/admin/** is a visual editor: the real page with every text
+**https://albalaeff.eu/admin/** is a visual editor: the real page with every text
 block editable in place, photos replaceable by clicking them. Saving commits the change
 to `main` through the GitHub API, and Pages publishes it about a minute later.
 
@@ -72,5 +72,10 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
   caches files for about 10 minutes, and the new number makes browsers load the fresh version.
 - **GitHub Foundations:** after the exam, replace the “In preparation” card in
   `#certificates` with the badge and a verification link.
-- **Own domain:** add a `CNAME` file with the domain, then update the absolute URLs in
-  `<link rel="canonical">`, the `og:` tags, `sitemap.xml` and `robots.txt`.
+- **Domain:** `albalaeff.eu`, registered at Spaceship. The `CNAME` file tells GitHub Pages to
+  serve the site there. DNS at Spaceship (Advanced DNS): four `A` records for `@`
+  (185.199.108.153, .109.153, .110.153, .111.153), four `AAAA` records for `@`
+  (2606:50c0:8000::153 … 2606:50c0:8003::153), `CNAME www → albalaeff.github.io`, and the
+  `_github-pages-challenge-albalaeff` TXT record that verifies the domain for the GitHub account.
+  Absolute URLs (canonical, `og:` tags, JSON-LD, `sitemap.xml`, `robots.txt`) use
+  `https://albalaeff.eu`.

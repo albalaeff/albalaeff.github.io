@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://albalaeff.github.io/sitemap.xml
+Sitemap: https://albalaeff.eu/sitemap.xml
