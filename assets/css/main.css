@@ -1704,6 +1704,23 @@ button {
   gap: 10px 24px;
 }
 
+.footer__about {
+  display: grid;
+  gap: 4px;
+}
+
+/* Ukrainian flag, drawn in CSS: flag emoji don't render on Windows */
+.flag-ua {
+  display: inline-block;
+  width: 16px;
+  height: 11px;
+  margin-right: 7px;
+  border-radius: 2px;
+  background: linear-gradient(#0057b7 50%, #ffd700 50%);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+  vertical-align: -1px;
+}
+
 .footer__links {
   display: flex;
   flex-wrap: wrap;
