@@ -2726,7 +2726,7 @@ main:has(> .section--mist:last-child) + .footer {
 /* ---------- Home: small portrait next to the name on phones ----------
    The text wrapper is flattened (display: contents) so the role and the name
    share a two-column grid with the photo; everything else spans both columns.
-   The photo fills the height of role + name and is zoomed to head and shoulders. */
+   The photo fills the height of role + name (cropped around the face). */
 @media (max-width: 879.98px) {
   .hero__grid {
     grid-template-columns: max-content minmax(0, 1fr);
@@ -2773,9 +2773,7 @@ main:has(> .section--mist:last-child) + .footer {
     height: 100%;
     aspect-ratio: auto;
     border-radius: 0;
-    object-position: 42% 30%;
-    transform: scale(1.45);
-    transform-origin: 42% 30%;
+    object-position: 50% 30%;
   }
 }
 
