@@ -1113,7 +1113,45 @@ button {
 
 .skillset {
   display: grid;
-  gap: 22px;
+  gap: 28px;
+}
+
+/* Each skill row lines up with Experience and Education: 64px logo tile, text after it */
+.skillset > div {
+  min-height: 64px;
+  padding-left: 84px;
+}
+
+.skill__logo {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-left: -84px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+
+.skill__logo svg {
+  width: 38px;
+  height: 38px;
+}
+
+.book__page {
+  fill: #e6effc;
+  stroke: #2f6fd8;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.book__lines {
+  fill: none;
+  stroke: #2f6fd8;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.55;
 }
 
 .skillset dt {
@@ -1145,22 +1183,16 @@ button {
 }
 
 .skillset .orch {
+  max-width: 400px;
   margin-top: 18px;
+  -webkit-user-select: none;
+  user-select: none; /* its labels shouldn't end up in copied text */
 }
 
-/* Wide screens: the animation sits in a right-hand column beside the whole list */
-@media (min-width: 1000px) {
-  .skillset {
-    position: relative;
-    padding-right: 380px;
-  }
-
+/* Phones: the panel uses the full width under the text */
+@media (max-width: 759px) {
   .skillset .orch {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 340px;
-    margin-top: 0;
+    margin-left: -84px;
   }
 }
 
