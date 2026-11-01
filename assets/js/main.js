@@ -43,6 +43,65 @@
     document.querySelectorAll("[data-anim]").forEach((el) => offscreen.observe(el));
   }
 
+  /* ---------- Photo carousel on phones: one photo per swipe, page dots below ---------- */
+  document.querySelectorAll("[data-carousel]").forEach((gallery) => {
+    const slides = [...gallery.children];
+    if (slides.length < 2) return;
+
+    const centerOf = (slide) => slide.offsetLeft + slide.offsetWidth / 2;
+    const dots = document.createElement("div");
+    dots.className = "gallery-dots";
+    const buttons = slides.map((slide, i) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", `Photo ${i + 1} of ${slides.length}`);
+      button.addEventListener("click", () => {
+        gallery.scrollTo({
+          left: centerOf(slide) - gallery.clientWidth / 2,
+          behavior: reduceMotion.matches ? "auto" : "smooth",
+        });
+      });
+      dots.appendChild(button);
+      return button;
+    });
+    gallery.after(dots);
+
+    let current = -1;
+    const update = () => {
+      const max = gallery.scrollWidth - gallery.clientWidth;
+      const mid = gallery.scrollLeft + gallery.clientWidth / 2;
+      let index = 0;
+      slides.forEach((slide, i) => {
+        if (Math.abs(centerOf(slide) - mid) < Math.abs(centerOf(slides[index]) - mid)) index = i;
+      });
+      if (gallery.scrollLeft <= 2) index = 0;
+      else if (gallery.scrollLeft >= max - 2) index = slides.length - 1;
+      if (index === current) return;
+      current = index;
+      buttons.forEach((b, i) => b.setAttribute("aria-current", String(i === index)));
+    };
+
+    let queued = false;
+    gallery.addEventListener("scroll", () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        update();
+      });
+    }, { passive: true });
+
+    // Only a swipeable gallery is a keyboard stop (arrow keys scroll it).
+    const sync = () => {
+      if (gallery.scrollWidth > gallery.clientWidth + 1) gallery.tabIndex = 0;
+      else gallery.removeAttribute("tabindex");
+      current = -1;
+      update();
+    };
+    window.addEventListener("resize", sync);
+    sync();
+  });
+
   /* ---------- Bot demo in the phone: a detailed walkthrough that loops ---------- */
   const chat = document.querySelector("[data-demo]");
   if (!chat) return;

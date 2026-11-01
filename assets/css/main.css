@@ -2057,6 +2057,7 @@ main:has(> .section--mist:last-child) + .footer {
 
 /* Photo gallery: swipe on phones, three columns on larger screens */
 .gallery {
+  position: relative; /* slide positions are measured from here */
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: min(78%, 320px);
@@ -2064,8 +2065,14 @@ main:has(> .section--mist:last-child) + .footer {
   margin-top: 56px;
   padding-bottom: 6px;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+}
+
+.gallery:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
 }
 
 .gallery::-webkit-scrollbar {
@@ -2073,7 +2080,8 @@ main:has(> .section--mist:last-child) + .footer {
 }
 
 .gallery figure {
-  scroll-snap-align: start;
+  scroll-snap-align: center;
+  scroll-snap-stop: always; /* one photo per swipe */
 }
 
 .gallery img {
@@ -2087,15 +2095,6 @@ main:has(> .section--mist:last-child) + .footer {
   object-position: 50% 22%;
 }
 
-.gallery figcaption {
-  margin-top: 14px;
-  color: var(--graphite);
-}
-
-.gallery figcaption strong {
-  color: var(--ink);
-  font-weight: 600;
-}
 
 @media (min-width: 760px) {
   .gallery {
@@ -2701,8 +2700,54 @@ main:has(> .section--mist:last-child) + .footer {
   grid-auto-columns: 82%;
 }
 
-.gallery--bleed figcaption {
-  margin-top: 12px;
+/* Page dots under the swipeable gallery (phones only; built in main.js) */
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.gallery-dots button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.gallery-dots button::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--hairline);
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.gallery-dots button[aria-current="true"]::before {
+  width: 22px;
+  background: var(--ink);
+}
+
+.gallery-dots button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+@media (min-width: 760px) {
+  .gallery-dots {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-dots button::before {
+    transition: none;
+  }
 }
 
 @media (min-width: 760px) {
