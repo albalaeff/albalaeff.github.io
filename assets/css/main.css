@@ -2767,6 +2767,12 @@ main:has(> .section--mist:last-child) + .footer {
   stroke: var(--link);
 }
 
+/* A thin gap in the stage colour under a "crossed out" slash, so it reads apart from the sign */
+.section--stage .icon .icon__knock {
+  stroke: var(--stage);
+  stroke-width: 4.4;
+}
+
 /* ---------- Home: big photo gallery ---------- */
 .gallery--bleed {
   width: 100%;
