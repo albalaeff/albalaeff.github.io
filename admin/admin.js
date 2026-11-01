@@ -458,7 +458,7 @@ async function onImageFile(file) {
     state.images.set(id, { ...prev, ...prepared, url, alt: $("#img-alt").value });
     // Show it on the page right away.
     const img = fdoc().querySelector(`[data-cms-img="${id}"]`);
-    img.closest("picture")?.querySelectorAll("source").forEach((s) => s.remove());
+    img.closest("picture")?.querySelectorAll("source:not([media])").forEach((s) => s.remove());
     img.removeAttribute("srcset");
     img.src = url;
     $("#img-preview").src = url;

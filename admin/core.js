@@ -59,6 +59,10 @@ export function analyze(src) {
               inner: [parent.sourceCodeLocation.startTag.endOffset, parent.sourceCodeLocation.endTag.startOffset],
               outer: [parent.sourceCodeLocation.startOffset, parent.sourceCodeLocation.endOffset],
               indent: lineIndent(src, parent.sourceCodeLocation.startOffset),
+              // <source media> shows another photo on other screens (the phone portrait): kept as written.
+              keep: parent.childNodes
+                .filter((c) => isElement(c) && c.tagName === "source" && attr(c, "media") && c.sourceCodeLocation)
+                .map((c) => src.slice(c.sourceCodeLocation.startOffset, c.sourceCodeLocation.endOffset)),
             }
           : null;
         images.push({
@@ -181,8 +185,10 @@ export function buildEdits(src, analysis, changes) {
       const tag = imgTag(withAttrs(im.attrs, set, ["srcset", "sizes"]));
       if (im.picture) {
         // Drop the AVIF/WebP <source> elements: they point at the old photo.
+        // Those with a media query belong to other screens and stay.
         const ind = im.picture.indent;
-        edits.push({ range: im.picture.inner, text: `\n${ind}  ${tag}\n${ind}`, anchor: im.outer, kind: "image", id });
+        const lines = [...im.picture.keep, tag].map((t) => `\n${ind}  ${t}`).join("");
+        edits.push({ range: im.picture.inner, text: `${lines}\n${ind}`, anchor: im.outer, kind: "image", id });
       } else {
         edits.push({ range: im.tag, text: tag, anchor: im.outer, kind: "image", id });
       }

@@ -58,7 +58,11 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
   was changed by someone else, the editor refuses to save rather than overwrite it.
 - **Replaced photos** are resized to 2000 px on the long side, saved as JPEG (PNG if
   transparent, metadata stripped) under `assets/img/`, and the `<picture>` keeps a single
-  `<img>`. Older photo files stay in the repo.
+  `<img>`, plus any `<source media="…">`: those show a photo of their own on other screens.
+  Older photo files stay in the repo.
+- **The phone portrait** (`assets/img/portrait-phone.*`, the home page on screens under
+  880 px) is a `<source media>`, so the editor doesn't replace it: change the files and
+  the three `<source>` lines in `index.html` by hand.
 - Files: `admin/index.html`, `admin/admin.css`, `admin/admin.js` (UI and GitHub calls),
   `admin/core.js` (parsing and source edits, no DOM), `admin/parse5.js`. The folder is
   `noindex` and disallowed in `robots.txt`.
