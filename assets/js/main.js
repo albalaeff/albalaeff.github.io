@@ -135,13 +135,9 @@
 
   /* Pieces of the phone UI */
   const status = screen.querySelector(".chat-head__sub");
-  const statusText = status ? status.textContent : "";
-  const setTyping = (on) => {
-    // Telegram shows "typing…" under the bot's name, not in the chat
-    if (!status) return;
-    status.textContent = on ? "typing…" : statusText;
-    status.classList.toggle("is-typing", on);
-  };
+  // Telegram shows "typing…" under the bot's name, not in the chat. The label comes
+  // from CSS, so the page text ("bot") never changes (the site editor relies on that).
+  const setTyping = (on) => status?.classList.toggle("is-typing", on);
 
   const composer = document.createElement("div");
   composer.className = "composer";

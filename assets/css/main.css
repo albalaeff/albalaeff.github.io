@@ -3072,7 +3072,13 @@ main:has(> .section--mist:last-child) + .footer {
 }
 
 .chat-head__sub.is-typing {
+  font-size: 0;
+}
+
+.chat-head__sub.is-typing::after {
+  content: "typing\2026";
   color: #0071e3;
+  font-size: 12px;
 }
 
 .chat-head__avatar--coins {
