@@ -388,7 +388,7 @@ button {
 .nav__links a {
   color: var(--ink);
   opacity: 0.8;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   letter-spacing: -0.01em;
   transition: opacity 0.2s ease;
 }
@@ -401,12 +401,12 @@ button {
 .nav__cta {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 0 12px;
+  min-height: 32px;
+  padding: 0 15px;
   border-radius: 980px;
   background: var(--blue);
   color: #fff;
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: -0.01em;
 }
