@@ -304,9 +304,14 @@ function blockHtml(el) {
     unwrap(n);
   });
   while (c.lastChild && c.lastChild.nodeName === "BR" && !/<br>\s*$/.test(original)) c.lastChild.remove();
-  if (!original.includes("&nbsp;")) {
-    const walker = c.ownerDocument.createTreeWalker(c, NodeFilter.SHOW_TEXT);
-    for (let n = walker.nextNode(); n; n = walker.nextNode()) n.nodeValue = n.nodeValue.replace(/ /g, " ");
+  // Browsers type non-breaking spaces at the edges of text and next to spaces; those become
+  // ordinary spaces. One between two characters (like in "+421 950 704 527") is kept.
+  const walker = c.ownerDocument.createTreeWalker(c, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    n.nodeValue = n.nodeValue
+      .replace(/^\u00a0+|\u00a0+$/g, (m) => " ".repeat(m.length))
+      .replace(/ \u00a0|\u00a0 /g, "  ")
+      .replace(/ {2,}/g, (m, idx, all) => (idx === 0 || idx + m.length === all.length ? m : " "));
   }
   return c.innerHTML;
 }
