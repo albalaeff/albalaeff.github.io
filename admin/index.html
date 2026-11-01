@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Редактор сайта</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="admin.css?v=20261101-1">
+  <script type="module" src="admin.js?v=20261101-1"></script>
+</head>
+<body>
+  <!-- Sign-in: a GitHub token with write access to the site repository -->
+  <div class="login" id="login" hidden>
+    <div class="login__card">
+      <p class="login__eyebrow">albalaeff.github.io</p>
+      <h1 class="login__title">Редактор сайта</h1>
+      <p class="login__lead">Меняй тексты и фото прямо на странице. Чтобы правки сохранялись на GitHub, редактору нужен ключ доступа к репозиторию сайта. Его нужно создать один раз, и хранится он только в этом браузере.</p>
+      <ol class="login__steps">
+        <li>Открой <a id="token-link" href="#" target="_blank" rel="noopener">создание ключа на GitHub</a>. Название, срок и нужное право уже заполнены.</li>
+        <li>В разделе <b>Repository access</b> выбери <b>Only select repositories</b> и отметь <b>albalaeff.github.io</b>.</li>
+        <li>Убедись, что в <b>Permissions</b> у <b>Contents</b> стоит <b>Read and write</b>, и нажми <b>Generate token</b>.</li>
+        <li>Скопируй ключ (он начинается с <code>github_pat_</code>) и вставь его ниже.</li>
+      </ol>
+      <form class="login__form" id="login-form">
+        <input class="input" id="token-input" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false" required aria-label="Ключ GitHub">
+        <button class="btn" type="submit" id="login-submit">Войти</button>
+      </form>
+      <p class="login__error" id="login-error" role="alert" hidden></p>
+    </div>
+  </div>
+
+  <!-- Editor -->
+  <div class="app" id="app" hidden>
+    <header class="bar">
+      <div class="bar__group">
+        <span class="bar__title">Редактор</span>
+        <label class="visually-hidden" for="page-select">Страница</label>
+        <select class="select" id="page-select"></select>
+        <div class="seg" role="group" aria-label="Ширина экрана">
+          <button type="button" data-device="desktop" aria-pressed="true">Компьютер</button>
+          <button type="button" data-device="mobile" aria-pressed="false">Телефон</button>
+        </div>
+      </div>
+      <div class="bar__group bar__group--end">
+        <span class="bar__status" id="status" aria-live="polite">Нет изменений</span>
+        <button class="btn btn--ghost" type="button" id="discard" disabled>Отменить</button>
+        <button class="btn" type="button" id="save" disabled>Сохранить</button>
+        <details class="menu" id="menu">
+          <summary class="menu__button" aria-label="Ещё">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
+          </summary>
+          <div class="menu__list">
+            <a id="open-site" href="../" target="_blank" rel="noopener">Открыть сайт</a>
+            <a id="open-history" href="#" target="_blank" rel="noopener">История изменений</a>
+            <button type="button" id="logout">Выйти</button>
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <div class="hint" id="hint" hidden>
+      <p>Нажми на любой текст и меняй его прямо на странице. Нажми на фото, чтобы заменить его. Когда закончишь, нажми «Сохранить».</p>
+      <button class="hint__close" type="button" id="hint-close">Понятно</button>
+    </div>
+
+    <main class="stage" id="stage" data-device="desktop">
+      <iframe class="frame" id="frame" title="Страница сайта"></iframe>
+      <div class="loading" id="loading">Загружаю страницу…</div>
+    </main>
+
+    <!-- Floating toolbar for the text block being edited -->
+    <div class="toolbar" id="toolbar" hidden>
+      <button type="button" class="tool" data-cmd="bold" title="Жирный (Ctrl+B)"><b>B</b></button>
+      <button type="button" class="tool" data-cmd="italic" title="Курсив (Ctrl+I)"><i>I</i></button>
+      <span class="toolbar__link" id="link-wrap" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+        <input class="toolbar__input" id="link-input" type="text" spellcheck="false" aria-label="Адрес ссылки">
+      </span>
+      <button type="button" class="tool" id="revert" title="Вернуть как было">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h11a5 5 0 0 1 0 10H8"/><path d="M8 5 4 9l4 4"/></svg>
+      </button>
+    </div>
+
+    <!-- Photo panel -->
+    <aside class="panel" id="img-panel" hidden aria-labelledby="img-panel-title">
+      <div class="panel__head">
+        <h2 class="panel__title" id="img-panel-title">Фото</h2>
+        <button class="panel__close" type="button" id="img-close" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="panel__preview"><img id="img-preview" alt=""></div>
+      <label class="btn btn--ghost btn--block file">
+        <input type="file" id="img-file" accept="image/jpeg,image/png,image/webp">
+        Заменить фото…
+      </label>
+      <p class="panel__note">JPG, PNG или WebP. Большие фото уменьшаются до 2000 px по длинной стороне, данные о месте съёмки удаляются.</p>
+      <label class="field">
+        <span class="field__label">Описание фото (alt)</span>
+        <textarea class="input" id="img-alt" rows="4"></textarea>
+        <span class="field__hint">Его читают незрячие посетители и поисковики. Опиши, что на фото.</span>
+      </label>
+      <button class="btn btn--block" type="button" id="img-done">Готово</button>
+    </aside>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+  </div>
+</body>
+</html>

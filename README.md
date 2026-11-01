@@ -28,6 +28,7 @@ assets/js/main.js                Mobile menu and the chat demo
 assets/img/                      Photos, certificate preview, link-preview image (og.jpg)
 assets/docs/                     CV and certificate (PDF)
 assets/fonts/                    Inter (Latin subset)
+admin/                           Visual site editor (see below)
 ```
 
 ## Run locally
@@ -36,6 +37,31 @@ assets/fonts/                    Inter (Latin subset)
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
+
+## Site editor (`/admin/`)
+
+**https://albalaeff.github.io/admin/** is a visual editor: the real page with every text
+block editable in place, photos replaceable by clicking them. Saving commits the change
+to `main` through the GitHub API, and Pages publishes it about a minute later.
+
+- **Sign-in:** a fine-grained GitHub token limited to this repository with
+  *Contents: Read and write*. The sign-in screen links to a pre-filled token form. The token
+  stays in that browser's local storage; *Sign out* removes it.
+- **What can be edited:** every piece of text in `index.html`, `work/personal-exchange-bot.html`
+  and `404.html` (bold, italic, links, line breaks), photos and their `alt` text. Not editable
+  here: the animated phone demo (its script lives in `assets/js/main.js`), `<head>` tags,
+  layout and styles.
+- **How saving works:** the editor finds each block's exact position in the HTML source
+  (with [parse5](https://github.com/inikulin/parse5), bundled as `admin/parse5.js`) and
+  replaces only that block, so a commit touches only the lines that changed. If the file
+  changed on GitHub in the meantime, edits are moved onto the new version; if a block itself
+  was changed by someone else, the editor refuses to save rather than overwrite it.
+- **Replaced photos** are resized to 2000 px on the long side, saved as JPEG (PNG if
+  transparent, metadata stripped) under `assets/img/`, and the `<picture>` keeps a single
+  `<img>`. Older photo files stay in the repo.
+- Files: `admin/index.html`, `admin/admin.css`, `admin/admin.js` (UI and GitHub calls),
+  `admin/core.js` (parsing and source edits, no DOM), `admin/parse5.js`. The folder is
+  `noindex` and disallowed in `robots.txt`.
 
 ## Updating
 
