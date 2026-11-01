@@ -25,6 +25,7 @@ work/personal-exchange-bot.html  Bot case study
 404.html                         Not-found page (absolute paths on purpose)
 assets/css/main.css              All styles
 assets/js/main.js                Mobile menu and the chat demo
+assets/js/everest.js             "In development" scene: a climber on Everest's summit ridge (home page only)
 assets/img/                      Photos, certificate preview, link-preview image (og.jpg)
 assets/docs/                     CV and certificate (PDF)
 assets/fonts/                    Inter (Latin subset)
@@ -49,8 +50,8 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
   stays in that browser's local storage; *Sign out* removes it.
 - **What can be edited:** every piece of text in `index.html`, `work/personal-exchange-bot.html`
   and `404.html` (bold, italic, links, line breaks), photos and their `alt` text. Not editable
-  here: the animated phone demo (its script lives in `assets/js/main.js`), `<head>` tags,
-  layout and styles.
+  here: the animated phone demo (its script lives in `assets/js/main.js`), the Everest
+  scene in “In development” (`assets/js/everest.js`), `<head>` tags, layout and styles.
 - **How saving works:** the editor finds each block's exact position in the HTML source
   (with [parse5](https://github.com/inikulin/parse5), bundled as `admin/parse5.js`) and
   replaces only that block, so a commit touches only the lines that changed. If the file
@@ -73,8 +74,12 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
   Chromium). Replace the file to update it, then bump the `?v=` on the CV links in
   `index.html` and `work/personal-exchange-bot.html` so browsers fetch the new copy.
 - **After changing CSS or JS:** bump the `?v=` number in the `main.css` and `main.js` links
-  of every page (`index.html`, `work/personal-exchange-bot.html`, `404.html`). GitHub Pages
-  caches files for about 10 minutes, and the new number makes browsers load the fresh version.
+  of every page (`index.html`, `work/personal-exchange-bot.html`, `404.html`), and in the
+  `everest.js` link of `index.html`. GitHub Pages caches files for about 10 minutes, and the
+  new number makes browsers load the fresh version.
+- **Everest scene:** everything is drawn in code on a canvas, nothing to download. It runs only
+  while visible; with reduced motion it draws one still frame. Open the home page with
+  `?everest-debug` to get `window.__everest` (step the animation, check limb reach).
 - **GitHub Foundations:** after the exam, replace the “In preparation” card in
   `#certificates` with the badge and a verification link.
 - **Domain:** `albalaeff.eu`, registered at Spaceship. The `CNAME` file tells GitHub Pages to

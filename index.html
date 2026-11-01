@@ -26,7 +26,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/main.css?v=20261101-17">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261102-1">
 
   <script type="application/ld+json">
   {
@@ -79,6 +79,7 @@
         <ul class="nav__links">
           <li><a href="#project">Project</a></li>
           <li><a href="#approach">Approach</a></li>
+          <li><a href="#game">In development</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#resume">CV</a></li>
           <li><a href="#certificates">Certificates</a></li>
@@ -329,6 +330,38 @@
       </div>
     </section>
 
+    <!-- In development: the Everest game -->
+    <section class="section section--stage game" id="game" aria-labelledby="game-title">
+      <div class="wrap game__grid">
+        <div class="game__head">
+          <p class="status game__status">In development</p>
+          <h2 class="h2 h2--sm" id="game-title">Practise Everest before you climb it.</h2>
+          <p class="lead">A realistic 2D browser game about climbing Everest by the South route. It is meant as a trainer: what you learn should carry over to a real climb and help prevent deaths caused by mistakes and inexperience.</p>
+        </div>
+        <div class="game__scene" data-everest role="img" aria-label="Animation: before dawn high on Everest, a climber in a red down suit and an oxygen mask moves up a snow ridge on a fixed rope, one slow rest step at a time, his headlamp lighting the snow ahead. Wind blows snow off the ridge; other climbers’ headlamps climb the summit pyramid ahead.">
+          <canvas aria-hidden="true"></canvas>
+        </div>
+        <dl class="game__facts">
+          <div class="game__fact">
+            <dt>Co-op for 2 to 4</dt>
+            <dd>Climb online with friends and with Sherpa NPCs. Turn back or die, and you still help the team from camp.</dd>
+          </div>
+          <div class="game__fact">
+            <dt>Real accidents</dt>
+            <dd>Scenarios built on real Everest accidents, plus fictional ones.</dd>
+          </div>
+          <div class="game__fact">
+            <dt>One difficulty: hard</dt>
+            <dd>As realistic as possible, with a full tutorial for everyone.</dd>
+          </div>
+          <div class="game__fact">
+            <dt>Free, in the browser</dt>
+            <dd>For PC, in English and Russian.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
     <!-- About -->
     <section class="section section--mist" id="about" aria-labelledby="about-title">
       <div class="wrap about">
@@ -540,5 +573,6 @@
   </footer>
 
   <script src="assets/js/main.js?v=20261101-12" defer></script>
+  <script src="assets/js/everest.js?v=20261102-1" defer></script>
 </body>
 </html>
