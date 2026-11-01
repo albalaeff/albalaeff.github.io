@@ -2752,6 +2752,62 @@ main:has(> .section--mist:last-child) + .footer {
   }
 }
 
+/* ---------- Home: small portrait next to the name on phones ----------
+   The text wrapper is flattened (display: contents) so the role and the name
+   share a two-column grid with the photo; everything else spans both columns.
+   The photo fills the height of role + name and is zoomed to head and shoulders. */
+@media (max-width: 879.98px) {
+  .hero__grid {
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .hero__text {
+    display: contents;
+  }
+
+  .hero__text > * {
+    grid-column: 1 / -1;
+  }
+
+  .hero__role {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero .display {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: clamp(2.375rem, 1.1rem + 7.2vw, 4.5rem);
+  }
+
+  .hero__photo {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: stretch;
+    justify-self: end;
+    position: relative;
+    width: 100%;
+    max-width: 168px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .hero__photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+    object-position: 42% 30%;
+    transform: scale(1.45);
+    transform-origin: 42% 30%;
+  }
+}
+
 /* ---------- Home: the problem the bot solves ---------- */
 .problem {
   display: grid;
