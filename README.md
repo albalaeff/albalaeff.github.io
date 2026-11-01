@@ -69,8 +69,9 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
 
 ## Updating
 
-- **CV:** `assets/docs/Aleksandr-Balaev-CV.pdf` (one page, A4). Replace the file to update
-  it; the links on the site stay the same.
+- **CV:** `assets/docs/Aleksandr-Balaev-CV.pdf` (one page, A4, built from HTML with
+  Chromium). Replace the file to update it, then bump the `?v=` on the CV links in
+  `index.html` and `work/personal-exchange-bot.html` so browsers fetch the new copy.
 - **After changing CSS or JS:** bump the `?v=` number in the `main.css` and `main.js` links
   of every page (`index.html`, `work/personal-exchange-bot.html`, `404.html`). GitHub Pages
   caches files for about 10 minutes, and the new number makes browsers load the fresh version.
