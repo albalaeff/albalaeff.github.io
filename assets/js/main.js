@@ -35,6 +35,14 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* ---------- Decorative animations pause while off screen ---------- */
+  if ("IntersectionObserver" in window) {
+    const offscreen = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.classList.toggle("is-offscreen", !e.isIntersecting);
+    });
+    document.querySelectorAll("[data-anim]").forEach((el) => offscreen.observe(el));
+  }
+
   /* ---------- Bot demo in the phone: a detailed walkthrough that loops ---------- */
   const chat = document.querySelector("[data-demo]");
   if (!chat) return;

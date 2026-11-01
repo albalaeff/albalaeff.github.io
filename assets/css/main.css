@@ -1127,6 +1127,326 @@ button {
   color: var(--graphite);
 }
 
+/* AI engineering: Claude hands issues to Claude Code agents and gets results back */
+.orch {
+  --ok: #248a3d;
+  --run: var(--link);
+  --claude: #d97757;
+  max-width: 400px;
+  padding: 14px 16px;
+  border-radius: var(--radius-m);
+  background: var(--mist);
+}
+
+@media (prefers-color-scheme: dark) {
+  .orch {
+    --ok: #30d158;
+  }
+}
+
+.skillset .orch {
+  margin-top: 18px;
+}
+
+/* Wide screens: the animation sits in a right-hand column beside the whole list */
+@media (min-width: 1000px) {
+  .skillset {
+    position: relative;
+    padding-right: 380px;
+  }
+
+  .skillset .orch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 340px;
+    margin-top: 0;
+  }
+}
+
+.orch__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.orch__links path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+}
+
+.orch__spark,
+.orch__bot,
+.orch__go,
+.orch__halo {
+  fill: var(--claude);
+}
+
+.orch__spark,
+.orch__halo {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.orch__halo,
+.orch__go,
+.orch__back {
+  opacity: 0;
+}
+
+.orch__back {
+  fill: var(--ok);
+}
+
+.orch__card {
+  fill: var(--raised);
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+
+.orch__name {
+  fill: var(--ink);
+  font: 600 11.5px/1 var(--font);
+  letter-spacing: -0.01em;
+}
+
+.orch__state {
+  font: 500 10.5px/1 var(--font);
+  text-anchor: end;
+  opacity: 0;
+}
+
+.orch__state--queued { fill: var(--graphite); }
+.orch__state--running { fill: var(--run); }
+.orch__state--done { fill: var(--ok); }
+
+.orch__track {
+  fill: var(--hairline);
+  opacity: 0.6;
+}
+
+.orch__bar {
+  fill: var(--run);
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* Still picture (reduced motion): one agent done, one running, one queued */
+.orch__agent--1 .orch__state--done,
+.orch__agent--2 .orch__state--running,
+.orch__agent--3 .orch__state--queued {
+  opacity: 1;
+}
+
+.orch__agent--1 .orch__bar {
+  fill: var(--ok);
+  transform: scaleX(1);
+}
+
+.orch__agent--2 .orch__bar {
+  transform: scaleX(0.55);
+}
+
+/* Learning now: logo chips */
+.techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tech {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 6px 18px 6px 7px;
+  border-radius: 980px;
+  background: var(--mist);
+  color: var(--ink);
+}
+
+.tech__logo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--raised);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tech__logo svg {
+  width: 21px;
+  height: 21px;
+  overflow: visible;
+}
+
+.tech__logo--sql {
+  --db: #2f6fd8;
+  --db-fill: #e6effc;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tech__logo--sql {
+    --db: #4c9dff;
+    --db-fill: #1b2b44;
+  }
+}
+
+.db__row,
+.db__top {
+  fill: var(--db-fill);
+  stroke: var(--db);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.db__top {
+  fill: var(--raised);
+}
+
+.tech__logo--api svg {
+  fill: none;
+  stroke: var(--graphite);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .orch__spark {
+    animation: orch-spin 14s linear infinite;
+  }
+
+  .orch__halo {
+    animation: orch-pulse 2.333s ease-out infinite;
+  }
+
+  .orch__agent * {
+    animation-duration: 7s;
+    animation-delay: var(--d);
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  .orch__agent .orch__go { animation-name: orch-go; }
+  .orch__agent .orch__back { animation-name: orch-back; }
+  .orch__agent .orch__bar { animation-name: orch-work; }
+  .orch__agent .orch__card { animation-name: orch-card; }
+  .orch__agent .orch__state--queued { animation-name: orch-queued; }
+  .orch__agent .orch__state--running { animation-name: orch-running; }
+  .orch__agent .orch__state--done { animation-name: orch-done; }
+
+  .tech__logo--python svg {
+    animation: py-swim 3.2s ease-in-out infinite;
+  }
+
+  .tech:hover .tech__logo--python svg {
+    animation: py-spin 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .db__row {
+    animation: db-scan 2.4s ease-in-out infinite;
+  }
+
+  .db__row--2 { animation-delay: 0.25s; }
+  .db__row--3 { animation-delay: 0.5s; }
+
+  .api__out { animation: api-out 2.4s ease-in-out infinite; }
+  .api__in { animation: api-in 2.4s ease-in-out infinite; }
+
+  /* Decorative motion stops while off screen (class set in main.js) */
+  [data-anim].is-offscreen,
+  [data-anim].is-offscreen * {
+    animation-play-state: paused !important;
+  }
+}
+
+@keyframes orch-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orch-pulse {
+  0% { transform: scale(0.9); opacity: 0.22; }
+  70%, 100% { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes orch-go {
+  0% { transform: translate(102px, 92px); opacity: 0; }
+  2% { opacity: 1; }
+  14% { transform: translate(168px, var(--y)); opacity: 1; }
+  15%, 100% { transform: translate(168px, var(--y)); opacity: 0; }
+}
+
+@keyframes orch-back {
+  0%, 61% { transform: translate(168px, var(--y)); opacity: 0; }
+  63% { opacity: 1; }
+  75% { transform: translate(102px, 92px); opacity: 1; }
+  76%, 100% { transform: translate(102px, 92px); opacity: 0; }
+}
+
+@keyframes orch-work {
+  0%, 16% { transform: scaleX(0); fill: var(--run); opacity: 1; }
+  60% { transform: scaleX(1); fill: var(--run); }
+  62%, 90% { transform: scaleX(1); fill: var(--ok); opacity: 1; }
+  97%, 100% { transform: scaleX(1); fill: var(--ok); opacity: 0; }
+}
+
+@keyframes orch-card {
+  0%, 15% { stroke: var(--hairline); stroke-width: 1; }
+  17%, 60% { stroke: var(--run); stroke-width: 1.5; }
+  62%, 100% { stroke: var(--hairline); stroke-width: 1; }
+}
+
+@keyframes orch-queued {
+  0%, 15% { opacity: 1; }
+  16%, 93% { opacity: 0; }
+  94%, 100% { opacity: 1; }
+}
+
+@keyframes orch-running {
+  0%, 15% { opacity: 0; }
+  16%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0; }
+}
+
+@keyframes orch-done {
+  0%, 60% { opacity: 0; }
+  61%, 93% { opacity: 1; }
+  94%, 100% { opacity: 0; }
+}
+
+@keyframes py-swim {
+  0%, 100% { transform: translateY(1px) rotate(-10deg); }
+  50% { transform: translateY(-1.5px) rotate(10deg); }
+}
+
+@keyframes py-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes db-scan {
+  0%, 55%, 100% { fill: var(--db-fill); }
+  15%, 30% { fill: var(--db); }
+}
+
+@keyframes api-out {
+  0%, 100% { transform: translateX(-1px); }
+  50% { transform: translateX(1.5px); }
+}
+
+@keyframes api-in {
+  0%, 100% { transform: translateX(1px); }
+  50% { transform: translateX(-1.5px); }
+}
+
 .langs {
   display: grid;
   gap: 14px;
