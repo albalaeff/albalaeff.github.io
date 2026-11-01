@@ -3062,6 +3062,149 @@ main:has(> .section--mist:last-child) + .footer {
   opacity: 1;
 }
 
+/* ---------- Telegram look inside the phone ---------- */
+.phone .chat {
+  background-color: #c4d7a4;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.3) 1.1px, transparent 1.6px),
+    linear-gradient(165deg, #d9e6b8 0%, #bdd39e 55%, #a7c38c 100%);
+  background-size: 22px 22px, 100% 100%;
+}
+
+.chat-head__sub.is-typing {
+  color: #0071e3;
+}
+
+.chat-head__avatar--coins {
+  background: none;
+}
+
+.chat-head__avatar--coins svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* A bot message with its inline keyboard */
+.post {
+  align-self: flex-start;
+  max-width: 84%;
+  transform-origin: bottom left;
+  transition: opacity 0.32s ease, transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.post--keys {
+  width: 84%;
+}
+
+.post--full {
+  width: 100%;
+  max-width: 100%;
+}
+
+.post .msg {
+  max-width: 100%;
+}
+
+.phone .msg {
+  display: flow-root; /* keeps the floated time inside the bubble */
+}
+
+.post--keys .msg {
+  width: 100%;
+}
+
+.msg__time {
+  float: right;
+  position: relative;
+  top: 6px;
+  margin-left: 10px;
+  color: #a2a2a7;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.phone .msg--me {
+  background: #e1ffc7;
+  color: #1d1d1f;
+}
+
+.phone .msg--me .msg__time {
+  color: #5aa55a;
+}
+
+.phone .msg--me .msg__time::after {
+  content: "\2713\2713";
+  margin-left: 3px;
+  letter-spacing: -0.35em;
+}
+
+.ikb {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.ikb__row {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 4px;
+}
+
+.ikb .key {
+  padding: 7px 3px;
+  border-radius: 8px;
+  background: rgba(57, 88, 36, 0.42);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 359px) {
+  .ikb .key {
+    padding-inline: 1px;
+    font-size: 10.5px;
+    letter-spacing: -0.02em;
+  }
+}
+
+.ikb .key.is-pressed {
+  background: rgba(40, 66, 24, 0.62);
+  transform: scale(0.96);
+}
+
+.ikb .key.is-chosen {
+  background: rgba(57, 88, 36, 0.42);
+  color: #fff;
+}
+
+.ikb .key--ok,
+.ikb .key--ok.is-chosen {
+  background: rgba(58, 160, 64, 0.9);
+}
+
+.ikb .key.is-updated {
+  background: rgba(255, 255, 255, 0.75);
+  color: #1d1d1f;
+  text-shadow: none;
+}
+
+.ikb .key.is-on {
+  color: #ffd60a;
+}
+
+.msg__note {
+  transition: background-color 0.4s ease;
+}
+
+.msg__note.is-updated {
+  background: rgba(255, 214, 10, 0.35);
+}
+
 /* Mini App sheet with the map */
 .sheet-scrim {
   position: absolute;

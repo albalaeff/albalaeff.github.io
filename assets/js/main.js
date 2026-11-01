@@ -134,9 +134,14 @@
   const nextFrame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
   /* Pieces of the phone UI */
-  const typing = document.createElement("div");
-  typing.className = "msg typing is-hidden";
-  typing.innerHTML = "<span></span><span></span><span></span>";
+  const status = screen.querySelector(".chat-head__sub");
+  const statusText = status ? status.textContent : "";
+  const setTyping = (on) => {
+    // Telegram shows "typing…" under the bot's name, not in the chat
+    if (!status) return;
+    status.textContent = on ? "typing…" : statusText;
+    status.classList.toggle("is-typing", on);
+  };
 
   const composer = document.createElement("div");
   composer.className = "composer";
@@ -159,27 +164,45 @@
   screen.appendChild(scrim);
   screen.appendChild(sheet);
 
-  const kb = (cols, keys) =>
-    `<div class="kb kb--${cols}">` + keys.map((k) => `<span class="key">${k}</span>`).join("") + "</div>";
+  // Telegram inline keyboard under a message. A key is a label, or { t, ok } for a green button.
+  const inlineKeys = (rows) =>
+    '<div class="ikb">' +
+    rows
+      .map((row) => '<div class="ikb__row">' + row.map((k) => {
+        const key = typeof k === "string" ? { t: k } : k;
+        return `<span class="key${key.ok ? " key--ok" : ""}">${key.t}</span>`;
+      }).join("") + "</div>")
+      .join("") +
+    "</div>";
+
+  // Message time, sitting at the end of the last line like in Telegram
+  const stamp = (bubble, time) => {
+    if (!time) return;
+    const t = document.createElement("span");
+    t.className = "msg__time";
+    t.textContent = time;
+    const last = bubble.lastElementChild;
+    (last && last.tagName === "P" ? last : bubble).appendChild(t);
+  };
 
   const show = async (el) => {
     el.classList.add("is-entering");
-    chat.insertBefore(el, typing.parentNode === chat ? typing : null);
+    chat.appendChild(el);
     await nextFrame();
     el.classList.remove("is-entering");
   };
 
-  const bot = async (html, { cls = "", think = 750, read = 1300 } = {}) => {
-    chat.appendChild(typing);
-    typing.classList.remove("is-hidden");
+  const bot = async (html, { cls = "", think = 750, read = 1300, keys = null, at = "", full = false } = {}) => {
+    setTyping(true);
     await sleep(think);
-    typing.classList.add("is-hidden");
-    const el = document.createElement("div");
-    el.className = `msg msg--wide ${cls}`.trim();
-    el.innerHTML = html;
-    await show(el);
+    setTyping(false);
+    const post = document.createElement("div");
+    post.className = `post${keys ? " post--keys" : ""}${full ? " post--full" : ""}`;
+    post.innerHTML = `<div class="msg ${cls}">${html}</div>` + (keys ? inlineKeys(keys) : "");
+    stamp(post.firstElementChild, at);
+    await show(post);
     await sleep(read);
-    return el;
+    return post;
   };
 
   const ripple = (target) => {
@@ -207,7 +230,30 @@
     if (key) await press(key);
   };
 
-  const type = async (text) => {
+  const keyAt = (post, row, col) => post.querySelectorAll(".ikb__row")[row].children[col];
+
+  // The bot edits its form in place: a key's label changes, with a short highlight
+  const relabel = async (post, row, col, text) => {
+    const key = keyAt(post, row, col);
+    key.textContent = text;
+    key.classList.add("is-updated");
+    await sleep(650);
+    key.classList.remove("is-updated");
+  };
+
+  const addNote = async (post, text) => {
+    const bubble = post.querySelector(".msg");
+    const note = document.createElement("p");
+    note.className = "msg__note is-updated";
+    note.textContent = text;
+    const time = bubble.querySelector(".msg__time");
+    bubble.appendChild(note);
+    if (time) note.appendChild(time);
+    await sleep(650);
+    note.classList.remove("is-updated");
+  };
+
+  const type = async (text, at = "") => {
     composer.classList.add("is-typing");
     for (const ch of text) {
       composerText.textContent += ch;
@@ -218,6 +264,7 @@
     const el = document.createElement("div");
     el.className = "msg msg--me";
     el.textContent = text;
+    stamp(el, at);
     composerText.textContent = "";
     composer.classList.remove("is-typing");
     await show(el);
@@ -253,71 +300,69 @@
 
   const walkthrough = async () => {
     const menu = await bot(
-      `<p class="msg__title">Personal Exchange Bot</p><p>Swap rubles for local currency with people nearby. What would you like to do?</p>${kb(2, ["Create offer", "Offer feed", "My deals", "Profile"])}`,
-      { think: 600, read: 1500 }
+      `<p class="msg__title">Personal Exchange Bot</p><p>Swap rubles for local currency with people nearby. What would you like to do?</p>`,
+      { think: 600, read: 1500, at: "13:10", keys: [["➕ New offer", "Offer feed"], ["My deals", "Profile"]] }
     );
-    await tap(menu, "Create offer");
+    await tap(menu, "➕ New offer");
 
-    await bot(
-      `<p class="msg__title">What do you give?</p><p>Pick a currency or just type the amount.</p>${kb(5, ["RUB", "EUR", "USD", "CZK", "UAH"])}`,
-      { read: 1100 }
-    );
-    await type("50000 rub");
+    // The offer form, as it looks in the bot: one message, edited as you fill it in
+    const form = await bot(`<p class="msg__title">➕ New offer</p>`, {
+      at: "13:12",
+      full: true,
+      read: 1700,
+      keys: [
+        ["You give", "Choose", "💵 Cash"],
+        ["You get", "Choose", "💵 Cash"],
+        ["Meeting", "🤝 In person", "📍 Prague 🇨🇿"],
+        ["📝 Note"],
+        ["📣 In @pfxy_praha", "✅ On"],
+        ["✖️ Cancel", { t: "✅ Post", ok: true }],
+      ],
+    });
+    await press(keyAt(form, 0, 1));
+    await type("50000 rub", "13:12");
+    await relabel(form, 0, 1, "50,000 RUB");
+    await sleep(600);
 
-    const want = await bot(
-      `<p>Recognised: <b>50,000 RUB</b></p><p class="msg__title">What do you want in return?</p>${kb(4, ["EUR", "CZK", "USD", "UAH"])}`
-    );
-    await tap(want, "CZK");
+    await press(keyAt(form, 1, 1));
+    await type("13500 czk", "13:12");
+    await relabel(form, 1, 1, "13,500 CZK");
+    await addNote(form, "Rate 3.70 · market 3.64");
+    await sleep(1800);
 
-    const rateMsg = await bot(
-      `<p class="msg__title">Set your rate</p><p class="msg__note">RUB for 1 CZK, updated a minute ago</p><dl class="offer"><div><dt>Market rate</dt><dd>3.64</dd></div><div><dt>Exchangers</dt><dd>3.81</dd></div></dl>${kb(3, ["3.64", "3.70", "Custom"])}`,
-      { read: 1900 }
-    );
-    await tap(rateMsg, "3.70");
-
-    const city = await bot(
-      `<p>You get <b>13,514 CZK</b>.</p><p class="msg__title">Where can you meet?</p>${kb(3, ["Prague", "Brno", "Other"])}`
-    );
-    await tap(city, "Prague");
-
-    const preview = await bot(
-      `<p class="msg__title">Check your offer</p><dl class="offer"><div><dt>You give</dt><dd>50,000 RUB</dd></div><div><dt>You get</dt><dd>13,514 CZK</dd></div><div><dt>Rate</dt><dd>3.70</dd></div><div><dt>City</dt><dd>Prague</dd></div></dl>${kb(1, ["Publish", "Promote with Stars", "Edit"])}`,
-      { read: 2000 }
-    );
-    await tap(preview, "Publish");
-
-    await bot(`<p>${ok}Published in the Prague feed and city channel.</p>`, { read: 2200 });
+    await press(keyAt(form, 5, 1));
+    await bot(`<p>${ok}Published in the Prague feed and @pfxy_praha.</p>`, { read: 2200, at: "13:13" });
 
     await bot(
       `<p class="msg__title">New response</p><ul class="replies"><li><span>Dmitry <span class="replies__rating">★ 4.9</span></span><span class="replies__rate">3.70</span></li></ul><p class="msg__note">Accepts your rate</p>`,
-      { think: 1300, read: 1300 }
+      { think: 1300, read: 1300, at: "13:31" }
     );
     const counter = await bot(
-      `<p class="msg__title">Counter-offer</p><ul class="replies"><li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li></ul><p class="msg__note">You would get 13,699 CZK</p><p class="trust"><span class="trust__chip">Phone checked</span><span class="trust__chip">Not in spam lists</span></p>${kb(2, ["Choose Dmitry", "Choose Anna"])}`,
-      { read: 2200 }
+      `<p class="msg__title">Counter-offer</p><ul class="replies"><li><span>Anna <span class="replies__rating">★ 5.0</span></span><span class="replies__rate">3.65</span></li></ul><p class="trust"><span class="trust__chip">Phone checked</span><span class="trust__chip">Not in spam lists</span></p><p class="msg__note">You would get 13,699 CZK</p>`,
+      { read: 2200, at: "13:34", keys: [["Choose Dmitry", "Choose Anna"]] }
     );
     await tap(counter, "Choose Anna");
 
-    await bot(`<p class="msg__title">Deal with Anna started</p><p>Write here, and the bot passes your messages on.</p>`, { read: 1100 });
-    await bot(`<p class="msg__from">Anna</p><p>Hi! Where shall we meet?</p>`, { cls: "msg--relay", read: 900 });
-    await type("Somewhere central?");
-    const where = await bot(`<p>Choose a meeting point.</p>${kb(1, ["Open the map"])}`, { read: 900 });
-    await tap(where, "Open the map");
+    await bot(`<p class="msg__title">Deal with Anna started</p><p>Write here, and the bot passes your messages on.</p>`, { read: 1100, at: "13:35" });
+    await bot(`<p class="msg__from">Anna</p><p>Hi! Where shall we meet?</p>`, { cls: "msg--relay", read: 900, at: "13:36" });
+    await type("Somewhere central?", "13:36");
+    const where = await bot(`<p>Choose a meeting point.</p>`, { read: 900, at: "13:36", keys: [["🗺 Open the map"]] });
+    await tap(where, "🗺 Open the map");
     await mapSheet();
 
     await bot(
-      `<p class="msg__title">Meeting point set</p><p>Wenceslas Square, today at 17:30</p><div class="map"><span class="map__pin"></span></div>`,
-      { read: 2200 }
+      `<p class="msg__title">Meeting point set</p><div class="map"><span class="map__pin"></span></div><p>Wenceslas Square, today at 17:30</p>`,
+      { read: 2200, at: "13:37" }
     );
-    const done = await bot(`<p>Did the exchange happen?</p>${kb(2, ["Yes, all good", "Problem"])}`, { think: 1200 });
+    const done = await bot(`<p>Did the exchange happen?</p>`, { think: 1200, at: "17:52", keys: [["Yes, all good", "Problem"]] });
     await tap(done, "Yes, all good");
 
     const rating = await bot(
-      `<p>Anna confirmed too.</p><p class="msg__title">Rate Anna</p>${kb(5, ["★", "★", "★", "★", "★"])}`,
-      { read: 900 }
+      `<p>Anna confirmed too.</p><p class="msg__title">Rate Anna</p>`,
+      { read: 900, at: "17:53", keys: [["★", "★", "★", "★", "★"]] }
     );
     await rate(rating);
-    await bot(`<p>${ok}Deal closed. Thanks for the rating!</p>`, { read: 3200 });
+    await bot(`<p>${ok}Deal closed. Thanks for the rating!</p>`, { read: 3200, at: "17:53" });
   };
 
   const loop = async () => {
@@ -330,6 +375,7 @@
       await sleep(600);
     }
     chat.classList.remove("is-fading");
+    setTyping(false);
     chat.innerHTML = fallback;
     composer.remove();
     sheet.remove();
