@@ -922,39 +922,6 @@ button {
 }
 
 /* ---------- Feature list (my part) ---------- */
-.features {
-  display: grid;
-  gap: 40px 48px;
-  margin-top: 64px;
-}
-
-@media (min-width: 680px) {
-  .features {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1000px) {
-  .features {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.feature {
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
-}
-
-.feature p {
-  margin-top: 8px;
-  color: var(--graphite);
-}
-
-.contrib {
-  margin-top: 56px;
-  color: var(--graphite);
-}
-
 /* ---------- Steps (a real sequence) ---------- */
 .steps {
   display: grid;
