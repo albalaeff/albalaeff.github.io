@@ -102,6 +102,166 @@
     sync();
   });
 
+  /* ---------- Claude spark that behaves like a living thing ----------
+     The official mark is redrawn every frame: each of its 11 rays stretches,
+     thins and bends on its own slow rhythm, the body breathes and sways.
+     In the agents panel it also reaches toward the agent it hands an issue to
+     and swallows the result when it comes back. At rest (no JS, reduced
+     motion) it is the unchanged official path. */
+  const sparks = [...document.querySelectorAll("[data-spark]")];
+  if (sparks.length && !reduceMotion.matches && "IntersectionObserver" in window) {
+    const CX = 61.5; // centre of the mark in its 128-unit viewBox
+    const CY = 59.5;
+    const TAU = Math.PI * 2;
+    const wrap = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+    const bump = (x, c, w) => Math.exp(-(((x - c) / w) ** 2));
+    let seed = 7;
+    const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+
+    const build = (path) => {
+      const len = path.getTotalLength();
+      const n = 720;
+      const pts = [];
+      for (let i = 0; i < n; i++) {
+        const q = path.getPointAtLength((len * i) / n);
+        pts.push({ r: Math.hypot(q.x - CX, q.y - CY), a: Math.atan2(q.y - CY, q.x - CX) });
+      }
+      // Rays are the stretches of outline between the notches (local minima of r)
+      const W = 11;
+      const notches = [];
+      for (let i = 0; i < n; i++) {
+        if (pts[i].r > 35) continue;
+        let low = true;
+        for (let k = -W; k <= W && low; k++) if (pts[(i + k + n) % n].r < pts[i].r) low = false;
+        if (low && (!notches.length || i - notches[notches.length - 1] > W)) notches.push(i);
+      }
+      const rays = notches.map((start, j) => {
+        const end = notches[(j + 1) % notches.length];
+        const idx = [];
+        for (let i = start; i !== end; i = (i + 1) % n) idx.push(i);
+        const tip = idx.reduce((m, i) => (pts[i].r > pts[m].r ? i : m), idx[0]);
+        const base = (pts[start].r + pts[end].r) / 2;
+        for (const i of idx) pts[i].ray = j;
+        return {
+          axis: pts[tip].a, tip: pts[tip].r, base,
+          // each ray gets its own slow, never-quite-repeating rhythm
+          f: [0.11 + rand() * 0.12, 0.23 + rand() * 0.17, 0.08 + rand() * 0.1, 0.19 + rand() * 0.14],
+          p: [rand() * TAU, rand() * TAU, rand() * TAU, rand() * TAU],
+        };
+      });
+      return { pts, rays };
+    };
+
+    const living = sparks.map((path) => {
+      const panel = path.closest(".orch");
+      // Agents' directions as seen from the spark in panel units, and their dot animations
+      const agents = panel
+        ? [...panel.querySelectorAll(".orch__agent")].map((agent, k) => ({
+            angle: [-0.51, 0.02, 0.54][k] ?? 0,
+            dot: agent.querySelector(".orch__go"),
+          }))
+        : [];
+      return { path, panel, agents, shape: null, visible: false, amp: panel ? 1 : 0.75, rest: path.getAttribute("d") };
+    });
+
+    const phaseOf = (el) => {
+      const anim = el?.getAnimations?.()[0];
+      const t = anim?.effect?.getComputedTiming?.();
+      return t && t.progress != null ? t.progress : null;
+    };
+
+    const draw = (s, t) => {
+      if (!s.shape) s.shape = build(s.path);
+      const { pts, rays } = s.shape;
+      const amp = s.amp;
+      const breath = 1 + 0.035 * Math.sin((TAU * t) / 3.7) + 0.012 * Math.sin((TAU * t) / 1.9);
+      let scale = breath;
+      const sway = 0.07 * Math.sin((TAU * t) / 11) + 0.03 * Math.sin((TAU * t) / 4.3);
+
+      const reach = new Float32Array(rays.length);
+      const pull = new Float32Array(rays.length);
+      for (const ag of s.agents) {
+        const ph = phaseOf(ag.dot);
+        if (ph == null) continue;
+        // Hand-off: the dot leaves during 0–14% of the agent's cycle
+        const send = ph < 0.18 ? Math.sin((Math.PI * ph) / 0.18) : 0;
+        // Result arrives at 75%: a quick gulp, then a small rebound
+        const gulp = bump(ph, 0.765, 0.022);
+        const rebound = bump(ph, 0.81, 0.03);
+        scale *= 1 - 0.07 * gulp + 0.03 * rebound;
+        rays.forEach((ray, j) => {
+          const d = wrap(ray.axis - ag.angle);
+          const near = Math.exp(-((d / 0.55) ** 2));
+          reach[j] += 0.26 * send * near - 0.1 * gulp * near;
+          pull[j] += -0.3 * d * send * near + 0.12 * d * gulp * near;
+        });
+      }
+
+      let out = "";
+      // A wave runs round the body (neighbouring rays follow each other, like
+      // cilia or an anemone's tentacles), with a little private drift per ray.
+      const lens = rays.map((ray, j) => {
+        const wave = TAU * 0.3 * t - (TAU * 2 * j) / rays.length;
+        const L = 1 + amp * (0.07 * Math.sin(wave + 1.2) + 0.04 * Math.sin(TAU * ray.f[0] * t + ray.p[0])) + reach[j];
+        const bend = amp * (0.09 * Math.sin(wave) + 0.035 * Math.sin(TAU * ray.f[2] * t + ray.p[2])) + pull[j];
+        return { L, bend, thin: 1 / Math.sqrt(Math.max(L, 0.6)) };
+      });
+      for (let i = 0; i < pts.length; i++) {
+        const p = pts[i];
+        const ray = rays[p.ray];
+        let r = p.r;
+        let a = p.a;
+        if (ray && r > ray.base) {
+          const m = lens[p.ray];
+          const w = Math.min(1, (r - ray.base) / (ray.tip - ray.base));
+          const off = wrap(a - ray.axis);
+          r = ray.base + (r - ray.base) * m.L;
+          // longer rays get thinner (like a muscle), and the tip bends more than the root
+          a = ray.axis + off * (1 + (m.thin - 1) * w) + m.bend * w * w;
+        }
+        r *= scale;
+        a += sway;
+        const x = CX + r * Math.cos(a);
+        const y = CY + r * Math.sin(a);
+        out += (i ? "L" : "M") + x.toFixed(2) + " " + y.toFixed(2);
+      }
+      s.path.setAttribute("d", out + "Z");
+    };
+
+    let running = false;
+    const t0 = performance.now();
+    const frame = (now) => {
+      if (reduceMotion.matches) {
+        living.forEach((s) => s.path.setAttribute("d", s.rest));
+        running = false;
+        return;
+      }
+      const active = living.filter((s) => s.visible);
+      if (!active.length || document.hidden) {
+        running = false;
+        return;
+      }
+      for (const s of active) draw(s, (now - t0) / 1000);
+      requestAnimationFrame(frame);
+    };
+    const kick = () => {
+      if (running || document.hidden || reduceMotion.matches || !living.some((s) => s.visible)) return;
+      running = true;
+      requestAnimationFrame(frame);
+    };
+
+    const seen = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        const s = living.find((x) => x.path.closest("svg") === e.target);
+        if (s) s.visible = e.isIntersecting;
+      }
+      kick();
+    });
+    living.forEach((s) => seen.observe(s.path.closest("svg")));
+    document.addEventListener("visibilitychange", kick);
+    reduceMotion.addEventListener?.("change", kick);
+  }
+
   /* ---------- Bot demo in the phone: a detailed walkthrough that loops ---------- */
   const chat = document.querySelector("[data-demo]");
   if (!chat) return;

@@ -1131,6 +1131,7 @@ button {
 .skill__logo svg {
   width: 38px;
   height: 38px;
+  overflow: visible; /* the living Claude spark's rays may reach past the box */
 }
 
 .book__page {
@@ -1346,10 +1347,6 @@ button {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .orch__spark {
-    animation: orch-spin 14s linear infinite;
-  }
-
   .orch__halo {
     animation: orch-pulse 2.333s ease-out infinite;
   }
@@ -1392,10 +1389,6 @@ button {
   [data-anim].is-offscreen * {
     animation-play-state: paused !important;
   }
-}
-
-@keyframes orch-spin {
-  to { transform: rotate(360deg); }
 }
 
 @keyframes orch-pulse {
