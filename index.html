@@ -26,7 +26,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/main.css?v=20261102-1">
+  <link rel="stylesheet" href="assets/css/main.css?v=20261112-1">
 
   <script type="application/ld+json">
   {
@@ -219,112 +219,47 @@
       <div class="wrap">
         <div class="section-head">
           <h2 class="h2" id="approach-title">Agents write the code.<br>I own the result.</h2>
-          <p class="lead">On Personal Exchange Bot every change runs through the same loop: one GitHub issue, one coding agent, one fresh session. People stay in the loop through the issue thread.</p>
+          <p class="lead">Every change runs through the same loop: one GitHub issue, one coding agent, one fresh session.</p>
         </div>
 
-        <ol class="story flow">
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <p class="mini__meta"><span class="state"></span>Open issue #57</p>
-                <p class="mini__title">Show the exchanger rate on the offer card</p>
-                <p class="labels"><code class="label">model:opus</code><code class="label">effort:xhigh</code></p>
-              </div>
+        <div class="loop">
+          <div class="pipe" data-anim role="img" aria-label="An issue goes through the loop: issue, agent, code, tests and a person’s review, and is merged. Then the next issue starts in a fresh session.">
+            <div class="pipe__rail" aria-hidden="true">
+              <span class="pipe__line"><span class="pipe__fill"></span></span>
+              <span class="pipe__runner"><span class="pipe__tag"><b>#57</b><b>#58</b><b>#59</b><b>Merged</b></span></span>
+              <ol class="pipe__steps">
+                <li class="pipe__step pipe__step--issue"><span class="pipe__dot"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.25"/><circle class="pipe__core" cx="12" cy="12" r="2.1"/></svg></span><span class="pipe__name">Issue</span></li>
+                <li class="pipe__step pipe__step--agent"><span class="pipe__dot"><svg viewBox="0 0 128 128" focusable="false"><path d="m25.144 85.096 25.159-14.118.421-1.23-.421-.68h-1.23l-4.21-.26-14.377-.388-12.466-.518-12.078-.648-3.044-.648-2.85-3.755.292-1.879 2.558-1.716 3.659.324 8.095.55 12.143.842 8.807.519 13.05 1.36h2.072l.292-.842-.713-.518-.55-.519-12.564-8.516-13.6-9.002-7.123-5.18-3.853-2.623-1.943-2.461-.842-5.375 3.497-3.853 4.695.323 1.198.324 4.76 3.659 10.168 7.869 13.276 9.779 1.943 1.619.777-.55.097-.39-.875-1.457-7.22-13.049-7.707-13.276-3.432-5.504-.907-3.304c-.323-1.36-.55-2.492-.55-3.885L33.53.712 35.73 0l5.311.713 2.235 1.942 3.302 7.545 5.343 11.884 8.29 16.158 2.428 4.792 1.295 4.436.486 1.36h.842v-.777l.68-9.099 1.263-11.172 1.23-14.377.421-4.047L70.864 4.5l3.983-2.623 3.109 1.49 2.558 3.658-.356 2.364-1.522 9.876-2.979 15.478-1.943 10.362h1.133l1.296-1.295 5.245-6.962 8.808-11.01 3.886-4.37 4.533-4.825 2.914-2.3h5.505l4.047 6.023-1.813 6.218-5.666 7.188-4.696 6.087-6.735 9.067-4.21 7.253.39.583 1.003-.097 15.219-3.238 8.224-1.49 9.811-1.683 4.437 2.072.485 2.105-1.748 4.306-10.491 2.59-12.305 2.461-18.328 4.34-.226.162.259.323 8.257.778 3.53.194h8.645l16.093 1.198 4.21 2.784 2.525 3.4-.421 2.59-6.476 3.304-8.743-2.073-20.4-4.857-6.993-1.749h-.972v.583l5.829 5.7 10.685 9.649 13.373 12.434.68 3.076-1.716 2.429-1.813-.26-11.754-8.84-4.534-3.982-10.264-8.646h-.68v.907l2.364 3.465 12.499 18.78.647 5.764-.906 1.878-3.238 1.133-3.562-.647-7.318-10.265-7.545-11.56-6.087-10.361-.745.421-3.595 38.694-1.683 1.975-3.886 1.49-3.238-2.46-1.716-3.984 1.716-7.868 2.072-10.265 1.684-8.16 1.522-10.135.906-3.368-.064-.226-.745.097-7.642 10.492-11.624 15.704-9.197 9.843-2.201.875-3.82-1.976.355-3.53 2.137-3.14 12.726-16.19 7.674-10.038 4.954-5.796-.033-.842h-.29L22.066 98.987l-6.023.777-2.59-2.429.324-3.982 1.23-1.296 10.168-6.994Z"/></svg></span><span class="pipe__name">Agent</span></li>
+                <li class="pipe__step pipe__step--code"><span class="pipe__dot"><svg viewBox="0 0 24 24" focusable="false"><path d="M8.5 7.5 4 12l4.5 4.5m7-9L20 12l-4.5 4.5M13.4 5.5l-2.8 13"/></svg></span><span class="pipe__name">Code</span></li>
+                <li class="pipe__step pipe__step--tests"><span class="pipe__dot"><svg viewBox="0 0 24 24" focusable="false"><path d="m5.5 12.5 4 4 9-9"/></svg></span><span class="pipe__name">Tests</span></li>
+                <li class="pipe__step pipe__step--review"><span class="pipe__dot">AB</span><span class="pipe__name">Review</span></li>
+              </ol>
             </div>
-            <h3 class="h3 story__title">Open an issue</h3>
-            <p>Every task starts as a GitHub issue. Its labels set the model and the effort, using Claude Code’s own values.</p>
-          </li>
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <p class="mini__meta">Session manager</p>
-                <div class="lanes">
-                  <div class="lane"><span class="state"></span><b>#57</b><span>opus, xhigh</span><em>running</em></div>
-                  <div class="lane"><span class="state"></span><b>#58</b><span>sonnet, high</span><em>running</em></div>
-                  <div class="lane"><span class="state state--queued"></span><b>#59</b><span>haiku, low</span><em>queued</em></div>
-                </div>
+          </div>
+
+          <div class="power">
+            <h3 class="h3">Labels set the power</h3>
+            <div class="power__scales">
+              <div class="scale">
+                <p class="scale__key">model:</p>
+                <ol class="scale__steps" aria-label="Model labels, from the lightest to the most powerful">
+                  <li style="--h: .25"><code>haiku</code></li>
+                  <li style="--h: .5"><code>sonnet</code></li>
+                  <li style="--h: .75"><code>opus</code></li>
+                  <li style="--h: 1"><code>fable</code></li>
+                </ol>
               </div>
-            </div>
-            <h3 class="h3 story__title">Start an agent</h3>
-            <p>A session manager runs the issue watcher and starts one headless Claude Code agent per issue, each in its own git worktree.</p>
-          </li>
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <p class="mini__meta"><span class="avatar">AI</span>Agent commented on #57</p>
-                <p class="mini__body">My understanding: add a second rate under the market rate. Sample screen:</p>
-                <div class="sketch">
-                  <div><span>Market rate</span><b>3.64</b></div>
-                  <div class="sketch__new"><span>Exchangers</span><b>3.81</b></div>
-                </div>
-              </div>
-            </div>
-            <h3 class="h3 story__title">Confirm the task</h3>
-            <p>Before any code, the agent posts how it understood the issue, with sample screens where relevant.</p>
-          </li>
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <p class="mini__meta">Pull request for #57</p>
-                <ol class="commits">
-                  <li>Add the exchanger rate row</li>
-                  <li>Cover the rate row with tests</li>
+              <div class="scale">
+                <p class="scale__key">effort:</p>
+                <ol class="scale__steps" aria-label="Effort labels, from the lowest to the highest">
+                  <li style="--h: .2"><code>low</code></li>
+                  <li style="--h: .4"><code>medium</code></li>
+                  <li style="--h: .6"><code>high</code></li>
+                  <li style="--h: .8"><code>xhigh</code></li>
+                  <li style="--h: 1"><code>max</code></li>
                 </ol>
               </div>
             </div>
-            <h3 class="h3 story__title">Build</h3>
-            <p>The agent writes the code and the tests on its own branch and opens a pull request through the existing workflow.</p>
-          </li>
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <ul class="mini-checks">
-                  <li><span class="checks__ok"></span><b>ruff</b></li>
-                  <li><span class="checks__ok"></span><b>mypy</b></li>
-                  <li><span class="checks__ok"></span><b>pytest</b><em>4,808 tests</em></li>
-                  <li><span class="checks__ok"></span><b>gitleaks</b></li>
-                </ul>
-              </div>
-              <div class="mini mini--row"><span class="avatar avatar--person">AB</span>Review approved</div>
-            </div>
-            <h3 class="h3 story__title">Verify</h3>
-            <p>CI runs ruff, mypy, the full pytest suite and a secret scan. Then a person reviews the result.</p>
-          </li>
-          <li class="story__item">
-            <div class="frame" aria-hidden="true">
-              <div class="mini">
-                <p class="mini__meta">Handoff for the next session</p>
-                <p class="mini__body"><b>Done:</b> rate row and tests, #57 merged.</p>
-                <p class="mini__body"><b>Next:</b> translate the new label into Ukrainian.</p>
-              </div>
-            </div>
-            <h3 class="h3 story__title">Hand off</h3>
-            <p>The agent leaves a handoff for the next session. Agents talk through issue comments, in plain language anyone can read.</p>
-          </li>
-        </ol>
-        <p class="flow__caption small">A simplified example of one issue going through the loop.</p>
-
-        <div class="bento">
-          <div class="tile">
-            <p class="tile__big">1 : 1</p>
-            <p>One issue, one agent. Each works in its own git worktree, on its own branch, from a fresh session.</p>
-          </div>
-          <div class="tile">
-            <p class="tile__big">2</p>
-            <p>agents at a time. Other issues wait in a queue, and no issue ever gets two agents.</p>
-          </div>
-          <div class="tile">
-            <p class="tile__big tile__big--word">Opus, xhigh</p>
-            <p>the default model and effort when an issue has no labels.</p>
-          </div>
-          <div class="tile tile--wide">
-            <p class="tile__title">Labels set the power</p>
-            <p class="labels"><code class="label">model:haiku</code><code class="label">model:sonnet</code><code class="label">model:opus</code></p>
-            <p class="labels"><code class="label">effort:low</code><code class="label">effort:medium</code><code class="label">effort:high</code><code class="label">effort:xhigh</code><code class="label">effort:max</code></p>
-          </div>
-          <div class="tile">
-            <p class="tile__big">0</p>
-            <p>shared secrets. One setup script, and everyone signs in with their own GitHub and Claude accounts.</p>
           </div>
         </div>
       </div>

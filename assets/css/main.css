@@ -2079,13 +2079,6 @@ main:has(> .section--mist:last-child) + .footer {
 }
 
 /* ---------- Agent workflow ---------- */
-.labels {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 12px;
-}
-
 .label {
   display: inline-block;
   padding: 3px 10px;
@@ -2429,285 +2422,396 @@ main:has(> .section--mist:last-child) + .footer {
   }
 }
 
-/* Approach: storyboard frames with mini UI */
-@media (min-width: 1000px) {
-  .flow {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 48px 24px;
-  }
-}
-
-.frame {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8px;
-  height: 236px;
-  padding: 16px;
-  overflow: hidden;
-  border-radius: var(--radius-l);
-  background: var(--mist);
-  font-size: 13.5px;
-  line-height: 1.38;
-  letter-spacing: -0.01em;
-}
-
-@media (max-width: 679px) {
-  .frame {
-    height: auto;
-  }
-}
-
-.mini {
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: var(--raised);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.mini--row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-}
-
-.mini__meta {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--graphite);
-  font-size: 12.5px;
-}
-
-.mini__title {
-  margin-top: 5px;
-  font-size: 14.5px;
-  font-weight: 600;
-  letter-spacing: -0.016em;
-}
-
-.mini__body {
-  margin-top: 6px;
-}
-
-.mini .labels {
-  margin-top: 10px;
-}
-
-.mini .label {
-  font-size: 11.5px;
-  padding: 2px 8px;
-}
-
-.state {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #30d158;
-}
-
-.state--queued {
-  background: #c7c7cc;
-}
-
-.lanes {
-  margin-top: 6px;
-}
-
-.lane {
-  display: grid;
-  grid-template-columns: 8px 34px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 8px;
-  padding-block: 7px;
-  border-top: 1px solid var(--hairline);
-  font-variant-numeric: tabular-nums;
-}
-
-.lane:first-child {
-  border-top: 0;
-}
-
-.lane span:not(.state) {
-  color: var(--graphite);
-}
-
-.lane em {
-  color: var(--graphite);
-  font-size: 12px;
-  font-style: normal;
-}
-
-.avatar {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--blue);
-  color: #fff;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-.avatar--person {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.sketch {
-  display: grid;
-  gap: 3px;
-  margin-top: 9px;
-  padding: 9px 11px;
-  border-radius: 10px;
-  background: var(--mist);
-  font-variant-numeric: tabular-nums;
-}
-
-.sketch div {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.sketch span {
-  color: var(--graphite);
-}
-
-.sketch__new,
-.sketch__new span {
-  color: var(--link);
-}
-
-.commits {
-  display: grid;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.commits li {
-  position: relative;
-  padding-left: 20px;
-}
-
-.commits li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 0.38em;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 2px var(--blue);
-  background: var(--raised);
-}
-
-.commits li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: calc(0.38em + 10px);
-  bottom: -12px;
-  width: 1px;
-  background: var(--hairline);
-}
-
-.mini-checks li {
-  display: grid;
-  grid-template-columns: 18px auto 1fr;
-  align-items: center;
-  gap: 10px;
-  padding-block: 6px;
-}
-
-.mini-checks b {
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
-.mini-checks em {
-  justify-self: end;
-  color: var(--graphite);
-  font-size: 12px;
-  font-style: normal;
-}
-
-.flow__caption {
-  margin-top: 28px;
-}
-
-/* Approach: bento of setup facts */
-.bento {
+/* ---------- Approach: one issue through the loop, and the labels ---------- */
+.loop {
   display: grid;
   gap: 16px;
-  margin-top: clamp(56px, 7vw, 88px);
+  margin-top: clamp(40px, 6vw, 64px);
+}
+
+.pipe,
+.power {
+  border-radius: var(--radius-l);
+  background: var(--mist);
+}
+
+/* The loop. Agents' steps in Claude's colour, the person's steps in ink.
+   An issue tag hops from step to step and ends merged; #57, #58 and #59 take
+   turns. At rest (reduced motion) it shows the merged issue at the review. */
+.pipe {
+  --dot: min(44px, 12vw);
+  --tag: 40px; /* room above the dots for the issue tag */
+  --ok: #248a3d;
+  --claude: #d97757;
+  padding: 22px clamp(10px, 3vw, 40px) 24px;
+  overflow: hidden; /* the runner below reaches past the panel */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pipe {
+    --ok: #30d158;
+  }
 }
 
 @media (min-width: 760px) {
-  .bento {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .tile--wide {
-    grid-column: span 2;
+  .pipe {
+    --dot: 56px;
+    --tag: 46px;
+    padding-block: 32px 34px;
   }
 }
 
-.tile {
+.pipe__rail {
+  position: relative;
+  padding-top: var(--tag);
+}
+
+.pipe__steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pipe__step {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: 210px;
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: var(--radius-l);
-  background: var(--mist);
+  align-items: center;
+  gap: 10px;
 }
 
-.tile > p:not(.tile__big):not(.tile__title):not(.labels) {
-  margin-top: 10px;
+.pipe__dot {
+  --ring: var(--hairline);
+  position: relative; /* sits over the line */
+  display: grid;
+  place-items: center;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--raised);
+  box-shadow: 0 0 0 1px var(--ring), 0 0 0 0 transparent;
+  color: var(--ink);
+}
+
+.pipe__dot svg {
+  width: 50%;
+  height: 50%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pipe__core {
+  fill: currentColor;
+  stroke: none;
+}
+
+.pipe__step--agent svg {
+  width: 56%;
+  height: 56%;
+  fill: var(--claude);
+  stroke: none;
+}
+
+.pipe__step--code .pipe__dot {
+  color: var(--claude);
+}
+
+.pipe__step--tests .pipe__dot {
+  color: var(--ok);
+}
+
+.pipe__step--tests svg {
+  stroke-width: 2.3;
+}
+
+.pipe__step--review .pipe__dot {
+  --ring: transparent;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: calc(var(--dot) * 0.3);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.pipe__name {
   color: var(--graphite);
-}
-
-.tile__big {
-  font-size: clamp(2.5rem, 1.9rem + 2vw, 3.5rem);
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: -0.045em;
-}
-
-.tile__title {
-  margin-bottom: 4px;
-  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
-  line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: -0.035em;
-}
-
-.tile .labels {
-  margin-top: 12px;
-}
-
-.tile .label {
   font-size: 0.8125rem;
-  padding: 4px 10px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-.tile__big--word {
-  font-size: clamp(2rem, 1.6rem + 1.3vw, 2.5rem);
-  letter-spacing: -0.04em;
-}
-
-@media (max-width: 759px) {
-  .tile {
-    min-height: 0;
+@media (min-width: 760px) {
+  .pipe__name {
+    font-size: 0.9375rem;
   }
+}
+
+/* The line joins the first and the last dot */
+.pipe__line {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: calc(var(--tag) + var(--dot) / 2 - 1px);
+  height: 2px;
+  border-radius: 1px;
+  background: var(--hairline);
+}
+
+.pipe__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--ok);
+  transform-origin: left center;
+}
+
+/* The tag rides on a runner as wide as the line, so 25% of it is one step */
+.pipe__runner {
+  position: absolute;
+  left: 10%;
+  top: 0;
+  width: 80%;
+  transform: translateX(100%);
+}
+
+.pipe__tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  padding: 5px 10px;
+  border-radius: 980px;
+  background-color: var(--ok);
+  color: var(--paper);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 760px) {
+  .pipe__tag {
+    padding: 6px 12px;
+    font-size: 0.8125rem;
+  }
+}
+
+.pipe__tag::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 1.5px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+.pipe__tag b {
+  grid-area: 1 / 1;
+  font-weight: inherit;
+  text-align: center;
+  opacity: 0;
+}
+
+.pipe__tag b:last-child {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pipe__runner {
+    animation: pipe-run 8s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+  }
+
+  .pipe__fill {
+    animation: pipe-fill 8s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+  }
+
+  .pipe__tag {
+    animation: pipe-tag 8s ease-out infinite;
+  }
+
+  .pipe__tag b:nth-child(1) { animation: pipe-no-1 24s linear infinite; }
+  .pipe__tag b:nth-child(2) { animation: pipe-no-2 24s linear infinite; }
+  .pipe__tag b:nth-child(3) { animation: pipe-no-3 24s linear infinite; }
+  .pipe__tag b:nth-child(4) { animation: pipe-merged 8s linear infinite; }
+
+  /* Each step lights up while the tag is on it: the same keyframes, shifted
+     so they start when the tag arrives (4%, 22%, 40%, 58% and 76% of the loop) */
+  .pipe__step:nth-child(1) { --at: -7.68s; }
+  .pipe__step:nth-child(2) { --at: -6.24s; }
+  .pipe__step:nth-child(3) { --at: -4.8s; }
+  .pipe__step:nth-child(4) { --at: -3.36s; }
+  .pipe__step:nth-child(5) { --at: -1.92s; }
+
+  .pipe__dot {
+    animation: pipe-ping 8s ease-out var(--at) infinite;
+  }
+
+  .pipe__name {
+    animation: pipe-name 8s ease-out var(--at) infinite;
+  }
+}
+
+@keyframes pipe-run {
+  0%, 16% { transform: translateX(0); }
+  22%, 34% { transform: translateX(25%); }
+  40%, 52% { transform: translateX(50%); }
+  58%, 70% { transform: translateX(75%); }
+  76%, 100% { transform: translateX(100%); }
+}
+
+@keyframes pipe-fill {
+  0%, 16% { transform: scaleX(0); background-color: var(--link); opacity: 1; }
+  22%, 34% { transform: scaleX(0.25); }
+  40%, 52% { transform: scaleX(0.5); }
+  58%, 70% { transform: scaleX(0.75); }
+  76% { transform: scaleX(1); background-color: var(--link); }
+  80%, 93% { transform: scaleX(1); background-color: var(--ok); opacity: 1; }
+  99%, 100% { transform: scaleX(1); background-color: var(--ok); opacity: 0; }
+}
+
+@keyframes pipe-tag {
+  0% { opacity: 0; transform: translate(-50%, 6px); background-color: var(--ink); }
+  4% { opacity: 1; transform: translate(-50%, 0); }
+  78% { transform: translate(-50%, 0) scale(1); background-color: var(--ink); }
+  80% { transform: translate(-50%, -2px) scale(1.08); background-color: var(--ok); }
+  83% { transform: translate(-50%, 0) scale(1); }
+  94% { opacity: 1; }
+  98%, 100% { opacity: 0; transform: translate(-50%, 0) scale(1); background-color: var(--ok); }
+}
+
+@keyframes pipe-merged {
+  0%, 79% { opacity: 0; }
+  80%, 100% { opacity: 1; }
+}
+
+/* Three rounds of the loop: #57, then #58, then #59 */
+@keyframes pipe-no-1 {
+  0%, 26.4% { opacity: 1; }
+  26.7%, 100% { opacity: 0; }
+}
+
+@keyframes pipe-no-2 {
+  0%, 33.3% { opacity: 0; }
+  33.4%, 59.7% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+@keyframes pipe-no-3 {
+  0%, 66.6% { opacity: 0; }
+  66.7%, 93% { opacity: 1; }
+  93.4%, 100% { opacity: 0; }
+}
+
+@keyframes pipe-ping {
+  0%, 16%, 100% {
+    box-shadow: 0 0 0 1px var(--ring), 0 0 0 0 transparent;
+    transform: scale(1);
+  }
+  3%, 12% {
+    box-shadow: 0 0 0 2px var(--link), 0 0 0 7px color-mix(in srgb, var(--link) 16%, transparent);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes pipe-name {
+  0%, 16%, 100% { color: var(--graphite); }
+  3%, 12% { color: var(--ink); }
+}
+
+/* Labels set the power: bars grow from the lightest model and effort to the strongest */
+.power {
+  --bar: 36px;
+  padding: 24px clamp(20px, 3vw, 40px) 26px;
+}
+
+@media (min-width: 760px) {
+  .power {
+    --bar: 48px;
+    padding-block: 32px 34px;
+  }
+}
+
+.power__scales {
+  --col: min(64px, calc((100% - 4 * 6px) / 5));
+  display: grid;
+  gap: 20px 56px;
+  margin-top: 16px;
+}
+
+/* Side by side: one share of the width per bar, so every bar is equally wide */
+@media (min-width: 760px) {
+  .power__scales {
+    --col: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 5fr);
+    max-width: 760px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .power {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr);
+    align-items: center;
+    gap: 40px;
+  }
+
+  .power__scales {
+    margin-top: 0;
+  }
+}
+
+.scale__key {
+  color: var(--graphite);
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+}
+
+.scale__steps {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--col);
+  align-items: end;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.scale__steps li {
+  display: grid;
+  gap: 8px;
+}
+
+.scale__steps li::before {
+  content: "";
+  height: calc(var(--h) * var(--bar));
+  border-radius: 7px;
+  background: var(--link);
+  opacity: calc(0.22 + var(--h) * 0.78);
+}
+
+.scale__steps code {
+  color: var(--graphite);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.scale__steps li:last-child code {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* ---------- Home: hero photo spans the whole text block ---------- */
