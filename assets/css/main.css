@@ -2435,11 +2435,12 @@ main:has(> .section--mist:last-child) + .footer {
   background: var(--mist);
 }
 
-/* The loop. Agents' steps in Claude's colour, the person's steps in ink.
+/* The loop: issue, agent, plan, the person's review of the plan, code, tests.
+   Agents' steps in Claude's colour, the person's steps in ink.
    An issue tag hops from step to step and ends merged; #57, #58 and #59 take
-   turns. At rest (reduced motion) it shows the merged issue at the review. */
+   turns. At rest (reduced motion) it shows the merged issue at the tests. */
 .pipe {
-  --dot: min(44px, 12vw);
+  --dot: min(44px, 10vw); /* six dots on a phone, with the line still showing between them */
   --tag: 40px; /* room above the dots for the issue tag */
   --ok: #248a3d;
   --claude: #d97757;
@@ -2470,7 +2471,7 @@ main:has(> .section--mist:last-child) + .footer {
 
 .pipe__steps {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .pipe__step {
@@ -2515,6 +2516,7 @@ main:has(> .section--mist:last-child) + .footer {
   stroke: none;
 }
 
+.pipe__step--plan .pipe__dot,
 .pipe__step--code .pipe__dot {
   color: var(--claude);
 }
@@ -2538,7 +2540,7 @@ main:has(> .section--mist:last-child) + .footer {
 
 .pipe__name {
   color: var(--graphite);
-  font-size: 0.8125rem;
+  font-size: min(0.8125rem, 3.6vw); /* a touch smaller below 360px, so six names keep apart */
   font-weight: 500;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -2550,11 +2552,11 @@ main:has(> .section--mist:last-child) + .footer {
   }
 }
 
-/* The line joins the first and the last dot */
+/* The line joins the first and the last dot (the middles of the first and last of six columns) */
 .pipe__line {
   position: absolute;
-  left: 10%;
-  right: 10%;
+  left: calc(100% / 12);
+  right: calc(100% / 12);
   top: calc(var(--tag) + var(--dot) / 2 - 1px);
   height: 2px;
   border-radius: 1px;
@@ -2569,12 +2571,12 @@ main:has(> .section--mist:last-child) + .footer {
   transform-origin: left center;
 }
 
-/* The tag rides on a runner as wide as the line, so 25% of it is one step */
+/* The tag rides on a runner as wide as the line, so 20% of it is one step */
 .pipe__runner {
   position: absolute;
-  left: 10%;
+  left: calc(100% / 12);
   top: 0;
-  width: 80%;
+  width: calc(100% * 10 / 12);
   transform: translateX(100%);
 }
 
@@ -2583,11 +2585,12 @@ main:has(> .section--mist:last-child) + .footer {
   left: 0;
   top: 0;
   display: grid;
-  padding: 5px 10px;
+  /* Slimmer on narrow phones: over the last dot, "Merged" has to stay inside the panel */
+  padding: 5px min(10px, 2.2vw);
   border-radius: 980px;
   background-color: var(--ok);
   color: var(--paper);
-  font-size: 0.75rem;
+  font-size: min(0.75rem, 3.45vw);
   line-height: 1.3;
   font-weight: 600;
   letter-spacing: 0;
@@ -2628,105 +2631,111 @@ main:has(> .section--mist:last-child) + .footer {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* One round is 10 s: the tag rests 1 s on each of the six steps and takes
+     0.5 s to hop to the next one, so each step keeps the old 8 s rhythm */
   .pipe__runner {
-    animation: pipe-run 8s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+    animation: pipe-run 10s cubic-bezier(0.55, 0, 0.25, 1) infinite;
   }
 
   .pipe__fill {
-    animation: pipe-fill 8s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+    animation: pipe-fill 10s cubic-bezier(0.55, 0, 0.25, 1) infinite;
   }
 
   .pipe__tag {
-    animation: pipe-tag 8s ease-out infinite;
+    animation: pipe-tag 10s ease-out infinite;
   }
 
-  .pipe__tag b:nth-child(1) { animation: pipe-no-1 24s linear infinite; }
-  .pipe__tag b:nth-child(2) { animation: pipe-no-2 24s linear infinite; }
-  .pipe__tag b:nth-child(3) { animation: pipe-no-3 24s linear infinite; }
-  .pipe__tag b:nth-child(4) { animation: pipe-merged 8s linear infinite; }
+  .pipe__tag b:nth-child(1) { animation: pipe-no-1 30s linear infinite; }
+  .pipe__tag b:nth-child(2) { animation: pipe-no-2 30s linear infinite; }
+  .pipe__tag b:nth-child(3) { animation: pipe-no-3 30s linear infinite; }
+  .pipe__tag b:nth-child(4) { animation: pipe-merged 10s linear infinite; }
 
   /* Each step lights up while the tag is on it: the same keyframes, shifted
-     so they start when the tag arrives (4%, 22%, 40%, 58% and 76% of the loop) */
-  .pipe__step:nth-child(1) { --at: -7.68s; }
-  .pipe__step:nth-child(2) { --at: -6.24s; }
-  .pipe__step:nth-child(3) { --at: -4.8s; }
-  .pipe__step:nth-child(4) { --at: -3.36s; }
-  .pipe__step:nth-child(5) { --at: -1.92s; }
+     so they start when the tag arrives (3%, 18%, 33%, 48%, 63% and 78% of the loop) */
+  .pipe__step:nth-child(1) { --at: -9.7s; }
+  .pipe__step:nth-child(2) { --at: -8.2s; }
+  .pipe__step:nth-child(3) { --at: -6.7s; }
+  .pipe__step:nth-child(4) { --at: -5.2s; }
+  .pipe__step:nth-child(5) { --at: -3.7s; }
+  .pipe__step:nth-child(6) { --at: -2.2s; }
 
   .pipe__dot {
-    animation: pipe-ping 8s ease-out var(--at) infinite;
+    animation: pipe-ping 10s ease-out var(--at) infinite;
   }
 
   .pipe__name {
-    animation: pipe-name 8s ease-out var(--at) infinite;
+    animation: pipe-name 10s ease-out var(--at) infinite;
   }
 }
 
 @keyframes pipe-run {
-  0%, 16% { transform: translateX(0); }
-  22%, 34% { transform: translateX(25%); }
-  40%, 52% { transform: translateX(50%); }
-  58%, 70% { transform: translateX(75%); }
-  76%, 100% { transform: translateX(100%); }
+  0%, 13% { transform: translateX(0); }
+  18%, 28% { transform: translateX(20%); }
+  33%, 43% { transform: translateX(40%); }
+  48%, 58% { transform: translateX(60%); }
+  63%, 73% { transform: translateX(80%); }
+  78%, 100% { transform: translateX(100%); }
 }
 
 @keyframes pipe-fill {
-  0%, 16% { transform: scaleX(0); background-color: var(--link); opacity: 1; }
-  22%, 34% { transform: scaleX(0.25); }
-  40%, 52% { transform: scaleX(0.5); }
-  58%, 70% { transform: scaleX(0.75); }
-  76% { transform: scaleX(1); background-color: var(--link); }
-  80%, 93% { transform: scaleX(1); background-color: var(--ok); opacity: 1; }
+  0%, 13% { transform: scaleX(0); background-color: var(--link); opacity: 1; }
+  18%, 28% { transform: scaleX(0.2); }
+  33%, 43% { transform: scaleX(0.4); }
+  48%, 58% { transform: scaleX(0.6); }
+  63%, 73% { transform: scaleX(0.8); }
+  78% { transform: scaleX(1); background-color: var(--link); }
+  82%, 93% { transform: scaleX(1); background-color: var(--ok); opacity: 1; }
   99%, 100% { transform: scaleX(1); background-color: var(--ok); opacity: 0; }
 }
 
 @keyframes pipe-tag {
   0% { opacity: 0; transform: translate(-50%, 6px); background-color: var(--ink); }
-  4% { opacity: 1; transform: translate(-50%, 0); }
-  78% { transform: translate(-50%, 0) scale(1); background-color: var(--ink); }
-  80% { transform: translate(-50%, -2px) scale(1.08); background-color: var(--ok); }
-  83% { transform: translate(-50%, 0) scale(1); }
+  3% { opacity: 1; transform: translate(-50%, 0); }
+  80% { transform: translate(-50%, 0) scale(1); background-color: var(--ink); }
+  82% { transform: translate(-50%, -2px) scale(1.08); background-color: var(--ok); }
+  85% { transform: translate(-50%, 0) scale(1); }
   94% { opacity: 1; }
   98%, 100% { opacity: 0; transform: translate(-50%, 0) scale(1); background-color: var(--ok); }
 }
 
 @keyframes pipe-merged {
-  0%, 79% { opacity: 0; }
-  80%, 100% { opacity: 1; }
+  0%, 81% { opacity: 0; }
+  82%, 100% { opacity: 1; }
 }
 
-/* Three rounds of the loop: #57, then #58, then #59 */
+/* Three rounds of the loop: #57, then #58, then #59 (each gives way to
+   "Merged" at 8.1-8.2 s of its round) */
 @keyframes pipe-no-1 {
-  0%, 26.4% { opacity: 1; }
-  26.7%, 100% { opacity: 0; }
+  0%, 27% { opacity: 1; }
+  27.333%, 100% { opacity: 0; }
 }
 
 @keyframes pipe-no-2 {
   0%, 33.3% { opacity: 0; }
-  33.4%, 59.7% { opacity: 1; }
-  60%, 100% { opacity: 0; }
+  33.4%, 60.333% { opacity: 1; }
+  60.667%, 100% { opacity: 0; }
 }
 
 @keyframes pipe-no-3 {
   0%, 66.6% { opacity: 0; }
-  66.7%, 93% { opacity: 1; }
-  93.4%, 100% { opacity: 0; }
+  66.7%, 93.667% { opacity: 1; }
+  94%, 100% { opacity: 0; }
 }
 
 @keyframes pipe-ping {
-  0%, 16%, 100% {
+  0%, 13%, 100% {
     box-shadow: 0 0 0 1px var(--ring), 0 0 0 0 transparent;
     transform: scale(1);
   }
-  3%, 12% {
+  2.5%, 10% {
     box-shadow: 0 0 0 2px var(--link), 0 0 0 7px color-mix(in srgb, var(--link) 16%, transparent);
     transform: scale(1.08);
   }
 }
 
 @keyframes pipe-name {
-  0%, 16%, 100% { color: var(--graphite); }
-  3%, 12% { color: var(--ink); }
+  0%, 13%, 100% { color: var(--graphite); }
+  2.5%, 10% { color: var(--ink); }
 }
 
 /* Labels set the power: bars grow from the lightest model and effort to the strongest */
