@@ -26,8 +26,8 @@ work/personal-exchange-bot.html  Bot case study
 assets/css/main.css              All styles
 assets/js/main.js                Mobile menu and the chat demo
 assets/js/everest.js             "In development" scene: a climber on Everest's summit ridge (home page only)
-assets/img/                      Photos, certificate preview, link-preview image (og.jpg)
-assets/docs/                     CV and certificate (PDF)
+assets/img/                      Photos, certificate previews, link-preview image (og.jpg)
+assets/docs/                     CV and certificates (PDF)
 assets/fonts/                    Inter (Latin subset)
 admin/                           Visual site editor (see below)
 ```
@@ -80,8 +80,11 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
 - **Everest scene:** everything is drawn in code on a canvas, nothing to download. It runs only
   while visible; with reduced motion it draws one still frame. Open the home page with
   `?everest-debug` to get `window.__everest` (step the animation, check limb reach).
-- **GitHub Foundations:** after the exam, replace the “In preparation” card in
-  `#certificates` with the badge and a verification link.
+- **Certificates:** each card in `#certificates` has a preview image (JPEG + WebP in
+  `assets/img/`) that opens the certificate PDF in `assets/docs/`, plus a verification link.
+  ISTQB: CaSQB's PDF, verified in the ISTQB register. GitHub Foundations: the certificate cut
+  from the Microsoft Learn credential page (rotated upright, browser header and footer
+  removed), verified on Microsoft Learn. A landscape preview uses `cert--wide`.
 - **Domain:** `albalaeff.eu`, registered at Spaceship. The `CNAME` file tells GitHub Pages to
   serve the site there. DNS at Spaceship (Advanced DNS): four `A` records for `@`
   (185.199.108.153, .109.153, .110.153, .111.153), four `AAAA` records for `@`
