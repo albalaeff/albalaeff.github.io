@@ -61,7 +61,7 @@
   const SHIN = 0.43;
   const LEG = THIGH + SHIN;
   const ANK = 0.105; // ankle above the sole
-  const BALL = 0.16; // ball of the foot, ahead of the ankle
+  const TOE = 0.2; // front of the sole, ahead of the ankle: a stiff boot rolls over it
   const SPINE = 0.49; // pelvis to shoulder
   const UPPER = 0.31;
   const FORE = 0.28;
@@ -76,16 +76,18 @@
     return { ax: x - Math.sin(a) * ANK, ay: oy + Math.cos(a) * ANK, a };
   };
 
-  // The rear foot during the push: the heel peels off around the ball of the
-  // foot just enough for the leg to reach; past that the toe leaves the snow.
+  // The rear foot during the push: the heel peels off, the stiff boot rolling over the
+  // front of its sole, just enough for the leg to reach with the knee still a little
+  // bent (as locked at rest, so it doesn't snap straight first); past that the toe
+  // leaves the snow.
   const peeled = (x, P, give = 0) => {
     const base = planted(x);
-    const reach = LEG - 0.003 - give;
+    const reach = LEG - 0.014 - give;
     const far = (f) => Math.hypot(P.x - f.ax, P.y - f.ay);
     if (far(base) <= reach) return base;
     const a = base.a;
-    const px = x + Math.cos(a) * BALL;
-    const py = G(x) + 0.012 + Math.sin(a) * BALL;
+    const px = x + Math.cos(a) * TOE;
+    const py = G(x) + 0.012 + Math.sin(a) * TOE;
     const vx = base.ax - px;
     const vy = base.ay - py;
     const at = (b) => {
@@ -139,6 +141,65 @@
     const ux = (B.x - M.x) / (Math.hypot(B.x - M.x, B.y - M.y) || 1);
     const uy = (B.y - M.y) / (Math.hypot(B.x - M.x, B.y - M.y) || 1);
     return { M, end: { x: M.x + ux * l2, y: M.y + uy * l2 } };
+  };
+
+  // How far the ankle bends: the shin's lean from the boot's up direction (square to
+  // the sole), + toward the toe
+  const flexOf = (F, K) => {
+    const sx = K.x - F.ax;
+    const sy = K.y - F.ay;
+    const tx = Math.cos(F.a);
+    const ty = Math.sin(F.a);
+    return Math.atan2(sx * tx + sy * ty, sy * tx - sx * ty);
+  };
+
+  // A stiff high-altitude boot lets the ankle bend only so far. Past FLEX0 (the most the
+  // rest step asks of it) he lifts the heel instead: the boot rolls over the front of
+  // its sole and the front points bite into the snow. Lifting the heel only helps once
+  // the knee is bent (with a straight leg the knee would just come further forward), so
+  // the lift is the first minimum of a cost (ankle bent past FLEX0, against the lift),
+  // found by walking up from the flat foot. pose() eases the heel toward it.
+  const FLEX0 = 0.735;
+  const STIFF = 0.05;
+  const legOf = (H, F) => {
+    const kneeOf = (f) => ik(H, { x: f.ax, y: f.ay }, THIGH, SHIN, 1).M;
+    const tx = Math.cos(F.a);
+    const ty = Math.sin(F.a);
+    const px = F.ax + ty * ANK + tx * TOE;
+    const py = F.ay - tx * ANK + ty * TOE;
+    const roll = (b) => {
+      if (b < 1e-4) return F;
+      const q = rot(F.ax - px, F.ay - py, -b);
+      return { ax: px + q.x, ay: py + q.y, a: F.a - b };
+    };
+    const at = (b) => {
+      const f = roll(b);
+      return { F: f, K: kneeOf(f) };
+    };
+    if (flexOf(F, kneeOf(F)) <= FLEX0) return { b: 0, at };
+    const cost = (b) => {
+      const f = roll(b);
+      const e = Math.max(0, flexOf(f, kneeOf(f)) - FLEX0);
+      return 0.5 * e * e + STIFF * b * b;
+    };
+    const step = 0.01;
+    let b = 0;
+    let e = cost(0);
+    while (b < 1.2) {
+      const e1 = cost(b + step);
+      if (e1 >= e) break;
+      b += step;
+      e = e1;
+    }
+    let lo = Math.max(0, b - step);
+    let hi = b + step;
+    for (let n = 0; n < 12; n++) {
+      const m1 = lo + (hi - lo) / 3;
+      const m2 = hi - (hi - lo) / 3;
+      if (cost(m1) < cost(m2)) hi = m2;
+      else lo = m1;
+    }
+    return { b: (lo + hi) / 2, at };
   };
 
   /* ---------- The fixed rope ---------- */
@@ -198,6 +259,7 @@
     done: -99, // last anchor passed
     breath: 0.15,
     da: null,
+    lift: [0, 0], // heel lift of each foot, radians (see legOf)
     pose: null,
   };
 
@@ -352,9 +414,10 @@
       const T = m.tr;
       const c = smooth(0, 0.95, t) * (1 - smooth(1.95, 2.95, t));
       P = restPelvis(m.feet[r]);
-      const fwd = clamp(T.a.x - P.x - 0.27, 0, 0.12);
-      P = { x: P.x + fwd * c, y: P.y - 0.26 * c };
-      al = LEAN + (0.9 - LEAN) * c;
+      // bent at the waist more than at the knees: stiff boots don't let him squat deep
+      const fwd = clamp(T.a.x - P.x - 0.31, 0, 0.1);
+      P = { x: P.x + fwd * c, y: P.y - 0.2 * c };
+      al = LEAN + (1.05 - LEAN) * c;
       psi = lerp(-0.42, -1.02, c);
       feet[r] = planted(m.feet[r]);
       feet[f] = planted(m.feet[f]);
@@ -391,7 +454,13 @@
       { x: P.x + 0.01, y: P.y },
       { x: P.x - 0.015, y: P.y },
     ];
-    const knees = [0, 1].map((i) => ik(hips[i], { x: feet[i].ax, y: feet[i].ay }, THIGH, SHIN, 1).M);
+    const knees = [0, 1].map((i) => {
+      const leg = legOf(hips[i], feet[i]);
+      m.lift[i] += (leg.b - m.lift[i]) * (1 - Math.exp(-dt / 0.07));
+      const L = leg.at(m.lift[i]);
+      feet[i] = L.F;
+      return L.K;
+    });
 
     // arms: near hand on the jumar grip, far hand on the rope just above it
     const N = nextAnchor();
@@ -513,9 +582,41 @@
     c.stroke();
   };
 
-  const drawBoot = (c, F, p) => {
+  // where line PQ meets line RS
+  const meet = (P, Q, R, S) => {
+    const ax = Q.x - P.x;
+    const ay = Q.y - P.y;
+    const bx = S.x - R.x;
+    const by = S.y - R.y;
+    const den = ax * by - ay * bx;
+    if (Math.abs(den) < 1e-9) return { x: Q.x, y: Q.y };
+    const u = ((R.x - P.x) * by - (R.y - P.y) * bx) / den;
+    return { x: P.x + ax * u, y: P.y + ay * u };
+  };
+
+  // The boot is built in two frames: the foot (sole, toe box, heel) follows the sole,
+  // the shaft with its built-in gaiter follows the shin, so the leg always stays inside
+  // it. Between them the boot bends at the ankle and creases over the instep.
+  const COLLAR = 0.158; // top of the gaiter, up the shin from the ankle
+  const SHAFT_F = 0.079; // front of the shaft, from the middle of the shin
+  const SHAFT_B = 0.089; // back of the shaft
+  const drawBoot = (c, F, K, p) => {
+    const A = { x: F.ax, y: F.ay };
+    const tx = Math.cos(F.a);
+    const ty = Math.sin(F.a);
+    const ox = F.ax + ty * ANK;
+    const oy = F.ay - tx * ANK;
+    // foot frame: origin on the sole under the ankle, x toward the toe, y up from the sole
+    const fp = (x, y) => ({ x: ox + tx * x - ty * y, y: oy + ty * x + tx * y });
+    const l = dist(A, K) || 1;
+    const sx = (K.x - A.x) / l;
+    const sy = (K.y - A.y) / l;
+    // shin frame: origin at the ankle, y up the shin, x forward
+    const sp = (x, y) => ({ x: A.x + sy * x + sx * y, y: A.y - sx * x + sy * y });
+    const flex = flexOf(F, K);
+
     c.save();
-    c.translate(F.ax + Math.sin(F.a) * ANK, F.ay - Math.cos(F.a) * ANK);
+    c.translate(ox, oy);
     c.rotate(F.a);
     // crampon: frame, ten down points, two front points
     c.fillStyle = p.steel;
@@ -530,19 +631,39 @@
     c.lineTo(0.2, -0.012);
     c.fill();
     c.fillRect(-0.09, -0.009, 0.29, 0.009);
-    // boot
+    c.restore();
+
+    // outline: sole and toe box in the foot frame, the vamp up to the crease, the shaft
+    // up the shin, the collar, then down the back of the shaft and round the heel
+    const T = fp(0.172, 0.102); // top of the toe box
+    const X = meet(T, fp(0.085, 0.132), sp(SHAFT_F, 0), sp(SHAFT_F, 0.1)); // the crease
+    const tl = dist(T, X) || 1;
+    const r = Math.min(0.026, tl * 0.45);
+    const X1 = { x: X.x + ((T.x - X.x) / tl) * r, y: X.y + ((T.y - X.y) / tl) * r };
+    const X2 = { x: X.x + sx * r, y: X.y + sy * r };
+    const Cf = sp(SHAFT_F, COLLAR);
+    const Cb = sp(-SHAFT_B, COLLAR);
+    const Pb = sp(-SHAFT_B, 0.045);
+    const B1 = sp(-SHAFT_B, 0.045 - 0.05 * (0.6 + 0.4 * Math.cos(flex)));
+    const B2 = fp(-0.124, 0.06);
+    const H0 = fp(-0.105, 0);
+    const to = (q) => c.lineTo(q.x, q.y);
+    const qd = (k, q) => c.quadraticCurveTo(k.x, k.y, q.x, q.y);
     c.beginPath();
-    c.moveTo(-0.105, 0);
-    c.lineTo(0.2, 0);
-    c.quadraticCurveTo(0.248, 0.004, 0.243, 0.046);
-    c.quadraticCurveTo(0.236, 0.088, 0.172, 0.102);
-    c.lineTo(0.085, 0.132);
-    c.lineTo(0.072, 0.256);
-    c.lineTo(-0.086, 0.256);
-    c.lineTo(-0.098, 0.12);
-    c.quadraticCurveTo(-0.122, 0.052, -0.105, 0);
+    c.moveTo(H0.x, H0.y);
+    to(fp(0.2, 0));
+    qd(fp(0.248, 0.004), fp(0.243, 0.046));
+    qd(fp(0.236, 0.088), T);
+    to(X1);
+    qd(X, X2);
+    to(Cf);
+    to(Cb);
+    to(Pb);
+    c.bezierCurveTo(B1.x, B1.y, B2.x, B2.y, H0.x, H0.y);
     c.closePath();
-    const bg2 = c.createLinearGradient(-0.1, 0.25, 0.18, 0.0);
+    const g0 = fp(-0.1, 0.25);
+    const g1 = fp(0.18, 0);
+    const bg2 = c.createLinearGradient(g0.x, g0.y, g1.x, g1.y);
     bg2.addColorStop(0, p.bootT.light);
     bg2.addColorStop(0.5, p.bootT.base);
     bg2.addColorStop(1, p.bootT.dark);
@@ -550,19 +671,46 @@
     c.fill();
     c.save();
     c.clip();
+    c.save();
+    c.translate(ox, oy);
+    c.rotate(F.a);
     c.fillStyle = p.rand;
     c.fillRect(-0.15, -0.01, 0.45, 0.04); // rubber rand
     c.beginPath(); // toe cap
     c.ellipse(0.2, 0.03, 0.06, 0.045, 0, 0, TAU);
     c.fill();
-    c.fillRect(-0.15, 0.226, 0.4, 0.05); // gaiter collar
+    c.restore();
+    c.save();
+    c.translate(A.x, A.y);
+    c.rotate(Math.atan2(-sx, sy));
+    c.fillStyle = p.rand;
+    c.fillRect(-0.15, COLLAR - 0.03, 0.3, 0.05); // gaiter collar, square to the shin
+    c.restore();
     c.strokeStyle = "rgba(0,0,0,0.35)";
     c.lineWidth = 0.006;
-    c.beginPath(); // gaiter zip
-    c.moveTo(0.06, 0.22);
-    c.lineTo(0.09, 0.115);
+    c.beginPath(); // gaiter zip: down the shaft and over the instep toward the toe
+    const z0 = sp(0.026, COLLAR - 0.034);
+    const z1 = sp(0.05, 0.03);
+    const z2 = fp(0.168, 0.09);
+    c.moveTo(z0.x, z0.y);
+    qd(z1, z2);
     c.stroke();
-    c.restore();
+    // creases over the instep as the ankle bends forward
+    const fold = smooth(0.15, 0.7, flex);
+    if (fold > 0.01) {
+      const ux = (A.x - X.x) / (dist(A, X) || 1);
+      const uy = (A.y - X.y) / (dist(A, X) || 1);
+      c.strokeStyle = `rgba(24,12,0,${0.38 * fold})`;
+      c.lineWidth = 0.005;
+      c.beginPath();
+      for (const [o, len] of [[0.004, 0.046], [-0.018, 0.03]]) {
+        const bx = X.x + ux * 0.008 + sx * o;
+        const by = X.y + uy * 0.008 + sy * o;
+        c.moveTo(bx, by);
+        c.quadraticCurveTo(bx + ux * len * 0.5 + sx * 0.008, by + uy * len * 0.5 + sy * 0.008, bx + ux * len - sx * 0.004, by + uy * len - sy * 0.004);
+      }
+      c.stroke();
+    }
     c.restore();
   };
 
@@ -590,7 +738,7 @@
     c.fill();
     c.restore();
     baffles(c, K, m, 0.082, 0.075, p.baffle, [0.55]);
-    drawBoot(c, F, p);
+    drawBoot(c, F, K, p);
   };
 
   const drawArm = (c, S, E, Hd, p) => {
