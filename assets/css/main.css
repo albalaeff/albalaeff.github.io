@@ -2154,8 +2154,10 @@ main:has(> .section--mist:last-child) + .footer {
   border-radius: var(--radius-l);
 }
 
+/* Bus selfie (514×913 in a 4:5 frame): the whole chin and a little neck stay in,
+   only the tips of the hair go */
 .gallery .gallery__img--top {
-  object-position: 50% 22%;
+  object-position: 50% 45%;
 }
 
 
