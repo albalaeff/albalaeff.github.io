@@ -84,7 +84,9 @@ to `main` through the GitHub API, and Pages publishes it about a minute later.
   `assets/img/`) that opens the certificate PDF in `assets/docs/`, plus a verification link.
   ISTQB: CaSQB's PDF, verified in the ISTQB register. GitHub Foundations: the certificate cut
   from the Microsoft Learn credential page (rotated upright, browser header and footer
-  removed), verified on Microsoft Learn. A landscape preview uses `cert--wide`.
+  removed), verified on Microsoft Learn. Python Programming Fundamentals: DataCamp's own PDF
+  of the statement of accomplishment (only the title, author and subject changed), verified
+  on its public DataCamp page. A landscape preview uses `cert--wide`.
 - **Domain:** `albalaeff.eu`, registered at Spaceship. The `CNAME` file tells GitHub Pages to
   serve the site there. DNS at Spaceship (Advanced DNS): four `A` records for `@`
   (185.199.108.153, .109.153, .110.153, .111.153), four `AAAA` records for `@`
